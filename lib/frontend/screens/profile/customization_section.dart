@@ -112,7 +112,10 @@ class _CustomizationSectionState extends State<CustomizationSection> {
       child: InkWell(
         onTap: _toggle,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 17),
+          padding: EdgeInsets.symmetric(
+            horizontal: AppMiuix.active ? 16 : 20,
+            vertical: 17,
+          ),
           child: Row(
             children: [
               Icon(

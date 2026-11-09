@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show HapticFeedback;
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import '../../../core/config/app_miuix.dart';
 import '../../../core/cache/self_presence.dart';
 import '../../../core/config/app_colors.dart';
 import '../../../core/config/omelet_settings.dart';
@@ -49,6 +50,8 @@ import 'spoof_screen.dart';
 import '../../widgets/media_playback_pill.dart';
 import '../../../core/config/app_fonts.dart';
 import '../../../core/config/app_shape.dart';
+
+double get _cardSide => AppMiuix.active ? 12 : 16;
 
 class SettingsTab extends StatefulWidget {
   const SettingsTab({super.key});
@@ -392,12 +395,12 @@ class _SettingsTabState extends State<SettingsTab> with SpectrumSurface {
                 ),
                 const SliverToBoxAdapter(
                   child: MediaPlaybackPill(
-                    margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
+                    margin: EdgeInsets.fromLTRB(_cardSide, 8, _cardSide, 0),
                   ),
                 ),
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                    padding: EdgeInsets.fromLTRB(_cardSide, 8, _cardSide, 0),
                     child: ValueListenableBuilder<bool>(
                       valueListenable: AppShowExtraInfo.current,
                       builder: (context, showExtraInfo, _) {
@@ -457,13 +460,13 @@ class _SettingsTabState extends State<SettingsTab> with SpectrumSurface {
                 ),
                 const SliverToBoxAdapter(
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(16, 12, 16, 0),
+                    padding: EdgeInsets.fromLTRB(_cardSide, 12, _cardSide, 0),
                     child: CustomizationSection(),
                   ),
                 ),
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                    padding: EdgeInsets.fromLTRB(_cardSide, 12, _cardSide, 0),
                     child: _buildSection(
                       context,
                       items: [
@@ -574,7 +577,12 @@ class _SettingsTabState extends State<SettingsTab> with SpectrumSurface {
                         ? KeyedSubtree(
                             key: const ValueKey('developers_settings_row'),
                             child: Padding(
-                              padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                              padding: EdgeInsets.fromLTRB(
+                                _cardSide,
+                                12,
+                                _cardSide,
+                                0,
+                              ),
                               child: _buildSection(
                                 context,
                                 items: [
@@ -602,7 +610,7 @@ class _SettingsTabState extends State<SettingsTab> with SpectrumSurface {
                 ),
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                    padding: EdgeInsets.fromLTRB(_cardSide, 12, _cardSide, 0),
                     child: _buildSection(
                       context,
                       items: [
