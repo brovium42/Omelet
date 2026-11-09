@@ -65,6 +65,24 @@ class MiuixThemeData {
           ),
         ),
       ),
+      checkboxTheme: theme.checkboxTheme.copyWith(
+        shape: const CircleBorder(),
+        side: BorderSide.none,
+        checkColor: const WidgetStatePropertyAll(Colors.white),
+        fillColor: WidgetStateProperty.resolveWith((states) {
+          final selected = states.contains(WidgetState.selected);
+          if (states.contains(WidgetState.disabled)) {
+            return selected
+                ? palette.disabledPrimary
+                : palette.disabledSecondary;
+          }
+          return selected ? cs.primary : palette.secondary;
+        }),
+        overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+      ),
+      segmentedButtonTheme: theme.segmentedButtonTheme.copyWith(
+        style: _segmentStyle(cs, palette),
+      ),
       switchTheme: theme.switchTheme.copyWith(
         thumbColor: WidgetStateProperty.resolveWith((states) {
           if (!states.contains(WidgetState.disabled)) return Colors.white;
@@ -85,6 +103,41 @@ class MiuixThemeData {
         trackOutlineWidth: const WidgetStatePropertyAll(0),
         thumbIcon: const WidgetStatePropertyAll(Icon(null)),
         overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+      ),
+    );
+  }
+
+  static ButtonStyle _segmentStyle(ColorScheme cs, MiuixPalette palette) {
+    final dark = cs.brightness == Brightness.dark;
+    final track = dark ? cs.surfaceContainer : palette.secondaryContainer;
+    final selected = dark
+        ? cs.surfaceContainerHighest
+        : cs.surfaceContainerHigh;
+    return ButtonStyle(
+      backgroundColor: WidgetStateProperty.resolveWith(
+        (states) => states.contains(WidgetState.selected) ? selected : track,
+      ),
+      foregroundColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.disabled)) {
+          return palette.onSurface.withValues(alpha: 0.3);
+        }
+        return states.contains(WidgetState.selected)
+            ? palette.onSurface
+            : palette.summary;
+      }),
+      textStyle: WidgetStateProperty.resolveWith(
+        (states) => TextStyle(
+          fontSize: 15,
+          fontWeight: states.contains(WidgetState.selected)
+              ? FontWeight.w500
+              : FontWeight.w400,
+        ),
+      ),
+      side: const WidgetStatePropertyAll(BorderSide.none),
+      overlayColor: WidgetStatePropertyAll(palette.pressedOverlay),
+      minimumSize: const WidgetStatePropertyAll(Size(0, 44)),
+      shape: WidgetStatePropertyAll(
+        MiuixShape.border(const BorderRadius.all(Radius.circular(12))),
       ),
     );
   }

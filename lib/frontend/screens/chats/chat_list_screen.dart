@@ -22,6 +22,8 @@ import '../../widgets/custom_notification.dart';
 import '../../widgets/glossy_pill.dart';
 import '../../widgets/sheet_helpers.dart';
 import '../../widgets/swipe_route.dart';
+import '../../widgets/miuix/miuix_components.dart';
+import '../../widgets/miuix/miuix_navigation_bar.dart';
 import '../../widgets/sliding_pill_nav.dart';
 import '../../widgets/springy_tap.dart';
 import '../../widgets/informer_banner_tile.dart';
@@ -1761,12 +1763,21 @@ class _ChatListScreenState extends State<ChatListScreen>
                                                         'Чат'),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            color: cs.onSurface,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: displayFontOf(context),
-                                          ),
+                                          style: AppMiuix.active
+                                              ? TextStyle(
+                                                  color: cs.onSurface,
+                                                  fontSize: MiuixTypography
+                                                      .largeTitle,
+                                                  fontWeight: FontWeight.w400,
+                                                )
+                                              : TextStyle(
+                                                  color: cs.onSurface,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontFamily: displayFontOf(
+                                                    context,
+                                                  ),
+                                                ),
                                         ),
                                       ),
                                     ],
@@ -1880,7 +1891,7 @@ class _ChatListScreenState extends State<ChatListScreen>
             AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeOutCubic,
-              height: 34,
+              height: AppMiuix.active ? MiuixTabChip.height : 34,
               color: cs.surface,
               child: ScrollConfiguration(
                 behavior: ScrollConfiguration.of(context).copyWith(
@@ -2213,6 +2224,42 @@ class _ChatListScreenState extends State<ChatListScreen>
   }
 
   Widget _buildDockedBottomNav(
+    ColorScheme cs,
+    double navInnerW,
+    double bottomInset,
+  ) {
+    return ValueListenableBuilder<VisualStyle>(
+      valueListenable: AppVisualStyle.current,
+      builder: (context, style, _) => style == VisualStyle.miuix
+          ? _buildMiuixBottomNav(bottomInset)
+          : _buildPillBottomNav(cs, navInnerW, bottomInset),
+    );
+  }
+
+  Widget _buildMiuixBottomNav(double bottomInset) {
+    return AnimatedPositioned(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOutCubic,
+      left: 0,
+      right: 0,
+      bottom: _isSelectionMode
+          ? -(MiuixNavigationBar.itemHeight + bottomInset + 1)
+          : 0,
+      child: RepaintBoundary(
+        child: MiuixNavigationBar(
+          items: _chatsNavItems,
+          selectedIndex: _currentNavIndex,
+          backdropKey: _frostBackdrop,
+          onTap: _onNavTabSelected,
+          onItemLongPress: (index, pos) {
+            if (index == 3) _openAccountSwitcher(pos);
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPillBottomNav(
     ColorScheme cs,
     double navInnerW,
     double bottomInset,
@@ -2855,23 +2902,25 @@ class _ChatListScreenState extends State<ChatListScreen>
         Haptics.medium();
         showFolderActionSheet(context, folder: folder);
       },
-      child: GlossyPill(
-        color: isSelected ? cs.primaryContainer : cs.surfaceContainerHigh,
-        borderRadius: BorderRadius.circular(50),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-        depth: 4,
-        child: Center(
-          child: Text(
-            _folderChipLabel(folder),
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: isSelected ? cs.onPrimaryContainer : cs.primary,
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
+      child: AppMiuix.active
+          ? MiuixTabChip(label: _folderChipLabel(folder), selected: isSelected)
+          : GlossyPill(
+              color: isSelected ? cs.primaryContainer : cs.surfaceContainerHigh,
+              borderRadius: BorderRadius.circular(50),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              depth: 4,
+              child: Center(
+                child: Text(
+                  _folderChipLabel(folder),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: isSelected ? cs.onPrimaryContainer : cs.primary,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 

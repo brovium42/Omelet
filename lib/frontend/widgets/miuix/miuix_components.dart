@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/config/app_miuix.dart';
 import '../../../core/config/app_miuix_colors.dart';
 import '../../../core/utils/haptics.dart';
 import 'miuix_surfaces.dart';
+
+class MiuixTypography {
+  static const double largeTitle = 32;
+  static const double title = 20;
+  static const double main = 17;
+  static const double body = 14;
+  static const double section = 14;
+
+  static TextStyle tabTitle(TextStyle fallback) => AppMiuix.active
+      ? TextStyle(
+          color: fallback.color,
+          fontSize: largeTitle,
+          fontWeight: FontWeight.w400,
+        )
+      : fallback;
+}
 
 class MiuixSmallTitle extends StatelessWidget {
   final String text;
@@ -17,8 +34,114 @@ class MiuixSmallTitle extends StatelessWidget {
         text,
         style: TextStyle(
           color: MiuixPalette.ofContext(context).sectionTitle,
-          fontSize: 14,
-          fontWeight: FontWeight.w700,
+          fontSize: MiuixTypography.section,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  }
+}
+
+class MiuixTopBar extends StatelessWidget implements PreferredSizeWidget {
+  static const double height = 56;
+
+  final String title;
+  final Color? backgroundColor;
+  final List<Widget> actions;
+
+  const MiuixTopBar({
+    super.key,
+    required this.title,
+    this.backgroundColor,
+    this.actions = const [],
+  });
+
+  @override
+  Size get preferredSize => const Size.fromHeight(height);
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final canPop = Navigator.of(context).canPop();
+    return Material(
+      color: backgroundColor ?? cs.surface,
+      child: SafeArea(
+        bottom: false,
+        child: SizedBox(
+          height: height,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 64),
+                child: Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: cs.onSurface,
+                    fontSize: MiuixTypography.title,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              if (canPop)
+                Positioned(
+                  left: 8,
+                  child: IconButton(
+                    tooltip: MaterialLocalizations.of(
+                      context,
+                    ).backButtonTooltip,
+                    icon: const Icon(Icons.arrow_back_rounded, size: 24),
+                    color: cs.onSurface,
+                    onPressed: () => Navigator.of(context).maybePop(),
+                  ),
+                ),
+              if (actions.isNotEmpty)
+                Positioned(
+                  right: 8,
+                  child: Row(mainAxisSize: MainAxisSize.min, children: actions),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class MiuixTabChip extends StatelessWidget {
+  static const double height = 40;
+
+  final String label;
+  final bool selected;
+
+  const MiuixTabChip({super.key, required this.label, required this.selected});
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final palette = MiuixPalette.ofContext(context);
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeOut,
+      height: height,
+      padding: const EdgeInsets.symmetric(horizontal: 14),
+      alignment: Alignment.center,
+      decoration: ShapeDecoration(
+        color: selected ? cs.surfaceContainerHigh : Colors.transparent,
+        shape: MiuixShape.border(const BorderRadius.all(Radius.circular(12))),
+      ),
+      child: Text(
+        label,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: selected ? cs.onSurface : palette.summary,
+          fontSize: 16,
+          fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
         ),
       ),
     );
@@ -246,8 +369,10 @@ class _MiuixSliderState extends State<MiuixSlider> {
       _range <= 0 ? 0 : ((widget.value - widget.min) / _range).clamp(0.0, 1.0);
 
   void _update(Offset local, double width) {
-    if (width <= 0) return;
-    final fraction = (local.dx / width).clamp(0.0, 1.0);
+    const half = MiuixSlider.height / 2;
+    final travel = width - MiuixSlider.height;
+    if (travel <= 0) return;
+    final fraction = ((local.dx - half) / travel).clamp(0.0, 1.0);
     final edge = fraction == 0 || fraction == 1;
     if (edge && !_atEdge) Haptics.selection();
     _atEdge = edge;
@@ -292,6 +417,8 @@ class _MiuixSliderState extends State<MiuixSlider> {
 }
 
 class _SliderPainter extends CustomPainter {
+  static const double _thumbInset = 4;
+
   final double fraction;
   final Color track;
   final Color fill;
@@ -315,11 +442,15 @@ class _SliderPainter extends CustomPainter {
     canvas.save();
     canvas.clipPath(trackPath);
     canvas.drawPath(trackPath, Paint()..color = track);
-    final fillWidth = size.width * fraction;
-    if (fillWidth > 0) {
-      final fillRect = Rect.fromLTWH(0, 0, fillWidth, size.height);
-      canvas.drawPath(shape.getOuterPath(fillRect), Paint()..color = fill);
-    }
+    final half = size.height / 2;
+    final thumbX = half + (size.width - size.height) * fraction;
+    final fillRect = Rect.fromLTWH(0, 0, thumbX + half, size.height);
+    canvas.drawPath(shape.getOuterPath(fillRect), Paint()..color = fill);
+    canvas.drawCircle(
+      Offset(thumbX, half),
+      half - _thumbInset,
+      Paint()..color = Colors.white,
+    );
     canvas.restore();
   }
 

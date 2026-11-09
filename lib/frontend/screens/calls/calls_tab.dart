@@ -8,6 +8,7 @@ import '../../../core/storage/app_database.dart';
 import '../../../core/utils/format.dart';
 import '../../../core/calls/call_controller.dart';
 import '../../../backend/modules/calls.dart';
+import '../../widgets/miuix/miuix_components.dart';
 import '../../widgets/omelet_avatar.dart';
 import '../../widgets/connection_status.dart';
 import '../../widgets/reload_on_reconnect.dart';
@@ -487,11 +488,13 @@ class _CallsTabState extends State<CallsTab>
                 children: [
                   Text(
                     'Звонки',
-                    style: TextStyle(
-                      color: cs.onSurface,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: displayFontOf(context),
+                    style: MiuixTypography.tabTitle(
+                      TextStyle(
+                        color: cs.onSurface,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: displayFontOf(context),
+                      ),
                     ),
                   ),
                   const ConnectionStatusLine(),

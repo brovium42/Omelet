@@ -9,6 +9,13 @@ import 'miuix/miuix_surfaces.dart';
 BorderRadius get _cardRadius =>
     AppMiuix.active ? MiuixShape.cardBorderRadius : AppShape.cardRadius;
 
+double get _tileTitleSize => AppMiuix.active ? 17 : 16;
+
+FontWeight get _tileTitleWeight =>
+    AppMiuix.active ? FontWeight.w400 : FontWeight.w500;
+
+double get _tileInset => AppMiuix.active ? 16 : 20;
+
 class SettingsPanel extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;
@@ -97,7 +104,10 @@ class SettingsToggleTile extends StatelessWidget {
           child: InkWell(
             onTap: () => onChanged(!value),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+              padding: EdgeInsets.symmetric(
+                horizontal: _tileInset,
+                vertical: 14,
+              ),
               child: Row(
                 children: [
                   Icon(icon, color: cs.onSurfaceVariant, size: 22, weight: 400),
@@ -110,8 +120,8 @@ class SettingsToggleTile extends StatelessWidget {
                           label,
                           style: TextStyle(
                             color: cs.onSurface,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                            fontSize: _tileTitleSize,
+                            fontWeight: _tileTitleWeight,
                           ),
                         ),
                         if (subtitle != null) ...[
@@ -171,7 +181,7 @@ class SettingsNavTile extends StatelessWidget {
               )
             : null,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 17),
+          padding: EdgeInsets.symmetric(horizontal: _tileInset, vertical: 17),
           child: Row(
             children: [
               leading ??
@@ -187,8 +197,8 @@ class SettingsNavTile extends StatelessWidget {
                   label,
                   style: TextStyle(
                     color: tintColor ?? cs.onSurface,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
+                    fontSize: _tileTitleSize,
+                    fontWeight: _tileTitleWeight,
                   ),
                 ),
               ),

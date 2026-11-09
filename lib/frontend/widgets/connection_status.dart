@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:m3e_collection/m3e_collection.dart';
 
 import '../../backend/api.dart';
+import '../../core/config/app_miuix.dart';
 import '../../main.dart' show api;
+import 'miuix/miuix_components.dart';
 import 'small_spinner.dart';
 
 final ValueNotifier<bool> debugForceOffline = ValueNotifier<bool>(false);
@@ -139,10 +141,15 @@ class ConnectionTitleBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) => ConnectionStatusBuilder(
-    builder: (context, label) => AppBarM3E(
-      titleText: label ?? titleText,
-      backgroundColor: backgroundColor,
-    ),
+    builder: (context, label) => AppMiuix.active
+        ? MiuixTopBar(
+            title: label ?? titleText,
+            backgroundColor: backgroundColor,
+          )
+        : AppBarM3E(
+            titleText: label ?? titleText,
+            backgroundColor: backgroundColor,
+          ),
   );
 }
 

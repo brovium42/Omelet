@@ -10,6 +10,7 @@ import '../../../backend/modules/contacts.dart';
 import '../../../backend/modules/messages.dart' show ContactCache;
 import '../../../main.dart';
 import '../../../models/contact_info.dart';
+import '../../widgets/miuix/miuix_components.dart';
 import '../../widgets/omelet_avatar.dart';
 import '../../widgets/connection_status.dart';
 import '../../widgets/sheet_helpers.dart';
@@ -239,11 +240,13 @@ class _ContactsTabState extends State<ContactsTab> with SpectrumSurface {
                       children: [
                         Text(
                           'Контакты',
-                          style: TextStyle(
-                            color: cs.onSurface,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: displayFontOf(context),
+                          style: MiuixTypography.tabTitle(
+                            TextStyle(
+                              color: cs.onSurface,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: displayFontOf(context),
+                            ),
                           ),
                         ),
                         const ConnectionStatusLine(),
