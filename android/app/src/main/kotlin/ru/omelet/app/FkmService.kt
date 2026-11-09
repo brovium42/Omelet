@@ -1,4 +1,4 @@
-package ru.komet.app
+package ru.omelet.app
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -15,7 +15,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 
 object FkmState {
-    private const val PREFS = "komet_fkm"
+    private const val PREFS = "omelet_fkm"
     private const val KEY_ENABLED = "enabled"
     private const val KEY_DELIVERED = "delivered"
 
@@ -60,7 +60,7 @@ object FkmState {
 }
 
 object FkmNotification {
-    const val CHANNEL_ID = "komet_fkm"
+    const val CHANNEL_ID = "omelet_fkm"
     const val NOTIFICATION_ID = 424244
 
     fun build(ctx: Context): Notification {
@@ -228,7 +228,7 @@ class FkmService : Service() {
 
 class FkmDisableReceiver : BroadcastReceiver() {
     companion object {
-        const val ACTION_DISABLE = "ru.komet.app.FKM_DISABLE"
+        const val ACTION_DISABLE = "ru.omelet.app.FKM_DISABLE"
     }
 
     override fun onReceive(ctx: Context, intent: Intent) {

@@ -90,21 +90,13 @@ class _EmojiPanelState extends State<EmojiPanel> {
     final recent = animojiModule.recentAnimojis;
     if (recent.isNotEmpty) {
       sections.add(
-        _EmojiSection(
-          title: 'Недавние',
-          icon: Symbols.schedule,
-          items: recent,
-        ),
+        _EmojiSection(title: 'Недавние', icon: Symbols.schedule, items: recent),
       );
     }
     final all = animojiModule.animojis;
     if (all.isNotEmpty) {
       sections.add(
-        _EmojiSection(
-          title: 'Animated',
-          icon: Symbols.animation,
-          items: all,
-        ),
+        _EmojiSection(title: 'Animated', icon: Symbols.animation, items: all),
       );
     }
     _sections = sections;

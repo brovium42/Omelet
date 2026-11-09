@@ -39,8 +39,7 @@ class InformerBanner {
   bool get animatesText => settings & BannerSettings.textAnimation != 0;
   bool get hidesCloseButton => settings & BannerSettings.hideCloseButton != 0;
   bool get closesOnClick => settings & BannerSettings.hideOnClick != 0;
-  bool get tintsIconWithTheme =>
-      settings & BannerSettings.iconThemeColor != 0;
+  bool get tintsIconWithTheme => settings & BannerSettings.iconThemeColor != 0;
 
   bool get isLink =>
       type == BannerType.link && url != null && url!.trim().isNotEmpty;

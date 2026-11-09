@@ -54,7 +54,10 @@ class _TiledSvgPatternState extends State<TiledSvgPattern> {
       if (_image != cached) setState(() => _image = cached);
       return;
     }
-    final future = _pending.putIfAbsent(key, () => _rasterize(widget.asset, px));
+    final future = _pending.putIfAbsent(
+      key,
+      () => _rasterize(widget.asset, px),
+    );
     try {
       final image = await future;
       _cache[key] = image;

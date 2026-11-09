@@ -27,9 +27,8 @@ abstract class WebAppEntryPoint {
   static const String fromSearch = 'from_search';
 }
 
-typedef WebAppMobileIdVerifier = Future<Map<String, dynamic>?> Function(
-  String url,
-);
+typedef WebAppMobileIdVerifier =
+    Future<Map<String, dynamic>?> Function(String url);
 
 typedef WebAppEmitter =
     void Function(String method, String payload, bool private);
@@ -90,8 +89,8 @@ const Set<String> _silentMethods = {
 
 const String _shim = r'''
 (function(){
-  if (window.__kometWebAppBridge) { return; }
-  window.__kometWebAppBridge = true;
+  if (window.__omeletWebAppBridge) { return; }
+  window.__omeletWebAppBridge = true;
   var pending = [];
   function target(priv){
     var box = priv ? window.PrivateWebApp : window.WebApp;
@@ -109,7 +108,7 @@ const String _shim = r'''
     pending = keep;
   }
   setInterval(flush, 50);
-  window.__kometWebAppDeliver = function(name, data, priv){
+  window.__omeletWebAppDeliver = function(name, data, priv){
     pending.push([name, data, !!priv]);
     flush();
   };
@@ -225,7 +224,7 @@ class WebAppBridge {
     if (controller == null) return;
     controller.evaluateJavascript(
       source:
-          'window.__kometWebAppDeliver('
+          'window.__omeletWebAppDeliver('
           '${jsonEncode(method)}, ${jsonEncode(payload)}, $private);',
     );
   }
@@ -289,10 +288,7 @@ class WebAppBridge {
         });
         return;
       case 'WebAppGetLaunchContext':
-        _send(method, {
-          'requestId': ?requestId,
-          'entryPoint': entryPoint,
-        });
+        _send(method, {'requestId': ?requestId, 'entryPoint': entryPoint});
         return;
       case 'WebAppGetViewportSize':
         final size = viewportResolver();
@@ -466,10 +462,7 @@ class WebAppBridge {
     }
     final target = await openForwardScreen(context: context);
     if (target == null) {
-      _send(method, {
-        'requestId': ?requestId,
-        'status': 'cancelled',
-      });
+      _send(method, {'requestId': ?requestId, 'status': 'cancelled'});
       return;
     }
     final accountId = await TokenStorage.getActiveAccountId();
@@ -479,10 +472,7 @@ class WebAppBridge {
     }
     try {
       await messagesModule.sendMessage(accountId, target.chatId, text);
-      _send(method, {
-        'requestId': ?requestId,
-        'status': 'shared',
-      });
+      _send(method, {'requestId': ?requestId, 'status': 'shared'});
     } catch (_) {
       _fail(method, requestId, 'invalid_request');
     }
@@ -565,11 +555,7 @@ class WebAppBridge {
       _fail(method, requestId, 'not_found');
       return;
     }
-    _send(method, {
-      'requestId': ?requestId,
-      'key': key,
-      'value': value,
-    });
+    _send(method, {'requestId': ?requestId, 'key': key, 'value': value});
   }
 
   Future<void> _storageClear(String method, String? requestId) async {
@@ -724,10 +710,7 @@ class WebAppBridge {
       _fail(method, requestId, 'cancelled');
       return;
     }
-    _send(method, {
-      'requestId': ?requestId,
-      'value': value,
-    });
+    _send(method, {'requestId': ?requestId, 'value': value});
   }
 
   Future<void> _verifyMobileId(

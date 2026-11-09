@@ -19,7 +19,7 @@ import '../storage/token_storage.dart';
 import '../transport/tls_config.dart';
 import '../utils/logger.dart';
 
-const _channelId = 'komet_messages';
+const _channelId = 'omelet_messages';
 const _channelName = 'Сообщения';
 const _prefsTokenKey = 'fcm_push_token';
 

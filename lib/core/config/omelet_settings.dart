@@ -1,15 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class KometSettings {
-  static const _kViewDeleted = 'komet_view_deleted';
-  static const _kViewRedacted = 'komet_view_redacted';
-  static const _kFullTimestamp = 'komet_full_timestamp';
-  static const _kGhostMode = 'komet_ghost_mode';
-  static const _kAntiRead = 'komet_anti_read';
-  static const _kSelfOnlineCheck = 'komet_self_online_check';
-  static const _kHideAllChatsFolder = 'komet_hide_all_chats_folder';
-  static const _kShowHiddenChats = 'komet_show_hidden_chats';
+class OmeletSettings {
+  static const _kViewDeleted = 'omelet_view_deleted';
+  static const _kViewRedacted = 'omelet_view_redacted';
+  static const _kFullTimestamp = 'omelet_full_timestamp';
+  static const _kGhostMode = 'omelet_ghost_mode';
+  static const _kAntiRead = 'omelet_anti_read';
+  static const _kSelfOnlineCheck = 'omelet_self_online_check';
+  static const _kHideAllChatsFolder = 'omelet_hide_all_chats_folder';
+  static const _kShowHiddenChats = 'omelet_show_hidden_chats';
 
   static final ValueNotifier<bool> viewDeleted = ValueNotifier(false);
   static final ValueNotifier<bool> viewRedacted = ValueNotifier(false);

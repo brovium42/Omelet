@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:komet/backend/modules/messages.dart';
-import 'package:komet/models/attachment.dart';
-import 'package:komet/models/bot_info.dart';
+import 'package:omelet/backend/modules/messages.dart';
+import 'package:omelet/models/attachment.dart';
+import 'package:omelet/models/bot_info.dart';
 
 void main() {
   group('botStarted control message', () {
@@ -32,11 +32,7 @@ void main() {
         'type': 'USER',
         'sender': 1001,
         'attaches': [
-          {
-            '_type': 'CONTROL',
-            'event': 'botStarted',
-            'startPayload': 'abc123',
-          },
+          {'_type': 'CONTROL', 'event': 'botStarted', 'startPayload': 'abc123'},
         ],
       });
 
@@ -68,7 +64,11 @@ void main() {
         'type': 'USER',
         'sender': 1001,
         'attaches': [
-          {'_type': 'CONTROL', 'event': 'add', 'userIds': [1002]},
+          {
+            '_type': 'CONTROL',
+            'event': 'add',
+            'userIds': [1002],
+          },
         ],
       });
 

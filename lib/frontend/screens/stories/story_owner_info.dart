@@ -23,7 +23,10 @@ StoryOwnerInfo? peekStoryOwnerInfo(StoryOwner owner) {
     final c = ContactInfoFetch.peek(owner.ownerId);
     final name = c?.displayName ?? c?.firstName;
     if (name != null && name.isNotEmpty) {
-      return StoryOwnerInfo(name: name, avatarUrl: c?.avatarUrl ?? cachedAvatar);
+      return StoryOwnerInfo(
+        name: name,
+        avatarUrl: c?.avatarUrl ?? cachedAvatar,
+      );
     }
     return null;
   }
@@ -110,13 +113,15 @@ class _StoryOwnerBuilderState extends State<StoryOwnerBuilder> {
   void _ensureResolved() {
     if (_info != null || _fetching) return;
     _fetching = true;
-    fetchStoryOwnerInfo(widget.owner).then((info) {
-      _fetching = false;
-      if (!mounted || info == null) return;
-      setState(() => _info = info);
-    }).catchError((_) {
-      _fetching = false;
-    });
+    fetchStoryOwnerInfo(widget.owner)
+        .then((info) {
+          _fetching = false;
+          if (!mounted || info == null) return;
+          setState(() => _info = info);
+        })
+        .catchError((_) {
+          _fetching = false;
+        });
   }
 
   @override

@@ -1013,7 +1013,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appearancePreviewNotBad => 'Not bad at all!';
 
   @override
-  String get callKometDetectedNotification => 'This person uses Komet! :3';
+  String get callOmeletDetectedNotification =>
+      'This person uses Omelet or Komet! :3';
 
   @override
   String get callStatusConnecting => 'Connecting';
@@ -1055,7 +1056,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get callTooltipExpand => 'Expand';
 
   @override
-  String get callTooltipKometHub => 'Omelet';
+  String get callTooltipOmeletHub => 'Omelet';
 
   @override
   String get callInfoTitle => 'About call';

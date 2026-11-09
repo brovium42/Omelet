@@ -232,9 +232,7 @@ Future<void> _openResolvedChat(
   await chats.cacheServerChat(chat, myId, inList: isMember);
   if (!context.mounted) return;
 
-  if (link.kind == MaxContentKind.invite &&
-      access == 'PRIVATE' &&
-      !isMember) {
+  if (link.kind == MaxContentKind.invite && access == 'PRIVATE' && !isMember) {
     final label = title.isEmpty ? 'этот чат' : '«$title»';
     final confirmed = await showConfirmDialog(
       context,

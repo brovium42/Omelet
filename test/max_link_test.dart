@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:komet/core/links/max_link.dart';
-import 'package:komet/frontend/widgets/link_text.dart';
+import 'package:omelet/core/links/max_link.dart';
+import 'package:omelet/frontend/widgets/link_text.dart';
 
 void main() {
   group('linkPattern', () {
@@ -108,8 +108,7 @@ void main() {
       expect(byName.baseUrl, 'https://max.ru/somechannel');
 
       final byId =
-          MaxLink.parse('max.ru/c/424242/900000000000000001')
-              as MaxContentLink;
+          MaxLink.parse('max.ru/c/424242/900000000000000001') as MaxContentLink;
       expect(byId.kind, MaxContentKind.content);
       expect(byId.messageId, 900000000000000001);
       expect(byId.baseUrl, 'https://max.ru/c/424242');
@@ -129,8 +128,7 @@ void main() {
 
     test('uid and cid open a contact and a chat', () {
       expect(
-        (MaxLink.parse('max://max.ru/?uid=434343') as MaxContactIdLink)
-            .userId,
+        (MaxLink.parse('max://max.ru/?uid=434343') as MaxContactIdLink).userId,
         434343,
       );
       final chat = MaxLink.parse('max://max.ru/?cid=424242') as MaxChatIdLink;

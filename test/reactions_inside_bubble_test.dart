@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:komet/backend/modules/messages.dart';
-import 'package:komet/frontend/widgets/message_bubble.dart';
-import 'package:komet/l10n/app_localizations.dart';
-import 'package:komet/models/animoji.dart';
-import 'package:komet/models/attachment.dart';
+import 'package:omelet/backend/modules/messages.dart';
+import 'package:omelet/frontend/widgets/message_bubble.dart';
+import 'package:omelet/l10n/app_localizations.dart';
+import 'package:omelet/models/animoji.dart';
+import 'package:omelet/models/attachment.dart';
 
 const int _me = 1;
 const int _peer = 7;
@@ -62,8 +62,11 @@ Future<void> _pump(WidgetTester tester, CachedMessage message) async {
           isMe: false,
           myId: _me,
           chatType: 'DIALOG',
-          reactionAnimojiResolver: (emoji) =>
-              Animoji(id: 1, emoji: emoji, iconUrl: 'https://example.com/a.png'),
+          reactionAnimojiResolver: (emoji) => Animoji(
+            id: 1,
+            emoji: emoji,
+            iconUrl: 'https://example.com/a.png',
+          ),
         ),
       ),
     ),

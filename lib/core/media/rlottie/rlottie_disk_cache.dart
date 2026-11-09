@@ -81,7 +81,13 @@ class RlottieDiskCache {
   }) async {
     if (frames.isEmpty || frames.length != frameCount) return;
     try {
-      final bytes = await _encode(px, frameCount, frameRate, durationMs, frames);
+      final bytes = await _encode(
+        px,
+        frameCount,
+        frameRate,
+        durationMs,
+        frames,
+      );
       final file = await _file(url, px);
       await file.writeAsBytes(bytes, flush: false);
       unawaited(_evict());
@@ -147,8 +153,9 @@ class RlottieDiskCache {
       }
       final frames = <Uint8List>[];
       for (var i = 0; i < frameCount; i++) {
-        frames.add(Uint8List.sublistView(
-            payload, i * frameBytes, (i + 1) * frameBytes));
+        frames.add(
+          Uint8List.sublistView(payload, i * frameBytes, (i + 1) * frameBytes),
+        );
       }
       return DiskClip(
         px: px,

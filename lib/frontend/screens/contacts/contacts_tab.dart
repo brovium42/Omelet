@@ -10,7 +10,7 @@ import '../../../backend/modules/contacts.dart';
 import '../../../backend/modules/messages.dart' show ContactCache;
 import '../../../main.dart';
 import '../../../models/contact_info.dart';
-import '../../widgets/komet_avatar.dart';
+import '../../widgets/omelet_avatar.dart';
 import '../../widgets/connection_status.dart';
 import '../../widgets/sheet_helpers.dart';
 import '../../widgets/small_spinner.dart';
@@ -157,7 +157,7 @@ class _ContactsTabState extends State<ContactsTab> with SpectrumSurface {
                       width: 1,
                     ),
                   ),
-                  child: KometAvatar(
+                  child: OmeletAvatar(
                     name: nameToDisplay,
                     imageUrl: contact.baseUrl,
                     size: 48,

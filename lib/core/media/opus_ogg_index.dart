@@ -92,7 +92,11 @@ class OpusOggIndex {
         pendingContiguous = true;
       } else if (pendingLength > 0 && pendingContiguous) {
         pendingParts.add(
-          Uint8List.sublistView(bytes, pendingStart, pendingStart + pendingLength),
+          Uint8List.sublistView(
+            bytes,
+            pendingStart,
+            pendingStart + pendingLength,
+          ),
         );
         pendingContiguous = false;
       }

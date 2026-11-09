@@ -265,7 +265,10 @@ class _WebPushScreenState extends State<WebPushScreen> {
         padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
         fontSize: 14,
       ),
-      _explainer(cs, _linked ? l10n.webPushLinkedBody : l10n.webPushInstallBody),
+      _explainer(
+        cs,
+        _linked ? l10n.webPushLinkedBody : l10n.webPushInstallBody,
+      ),
       if (_link != null) ...[
         const SizedBox(height: 12),
         _linkDetails(cs, l10n, _link!),

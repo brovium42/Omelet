@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:komet/core/utils/text_format.dart';
+import 'package:omelet/core/utils/text_format.dart';
 
 FormatRange _animoji(int start, int length, String url) => FormatRange(
   format: TextFormat.animoji,
@@ -34,15 +34,16 @@ void main() {
   });
 
   test('more than the limit is NOT jumbo', () {
-    final ranges = [
-      for (var i = 0; i < 5; i++) _animoji(i * 2, 2, 'L$i'),
-    ];
+    final ranges = [for (var i = 0; i < 5; i++) _animoji(i * 2, 2, 'L$i')];
     expect(animojiOnlyLottieUrls('❤️❤️❤️❤️❤️', ranges), isNull);
   });
 
   test('whitespace between animoji is allowed', () {
     expect(
-      animojiOnlyLottieUrls('❤️ ❤️', [_animoji(0, 2, 'L1'), _animoji(3, 2, 'L2')]),
+      animojiOnlyLottieUrls('❤️ ❤️', [
+        _animoji(0, 2, 'L1'),
+        _animoji(3, 2, 'L2'),
+      ]),
       ['L1', 'L2'],
     );
   });

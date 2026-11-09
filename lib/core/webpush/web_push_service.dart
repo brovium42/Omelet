@@ -194,7 +194,10 @@ class WebPushService {
     throw const MaxWebException('время подтверждения истекло');
   }
 
-  Future<WebPushAuthStep> submitPassword(String trackId, String password) async {
+  Future<WebPushAuthStep> submitPassword(
+    String trackId,
+    String password,
+  ) async {
     final socket = _requireSocket();
     final payload = _asMap(
       await socket.request(Opcode.authLoginCheckPassword, <String, Object?>{
@@ -222,7 +225,9 @@ class WebPushService {
   Future<void> registerSubscription(WebPushSubscription subscription) async {
     final token = await TokenStorage.readSecure(_tokenKey);
     if (token == null || token.isEmpty) {
-      throw const MaxWebException('сначала подключите уведомления в настройках');
+      throw const MaxWebException(
+        'сначала подключите уведомления в настройках',
+      );
     }
 
     final socket = MaxWebSocketSession(device: await device());

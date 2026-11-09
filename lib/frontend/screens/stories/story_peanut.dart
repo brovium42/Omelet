@@ -199,7 +199,9 @@ class _PeanutOutlinePainter extends CustomPainter {
             radius: radius,
           ),
         );
-      union = i == 0 ? circle : Path.combine(PathOperation.union, union, circle);
+      union = i == 0
+          ? circle
+          : Path.combine(PathOperation.union, union, circle);
     }
     canvas.drawPath(
       union,

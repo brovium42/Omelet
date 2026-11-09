@@ -53,9 +53,7 @@ class StoryOwner {
 
   @override
   bool operator ==(Object other) =>
-      other is StoryOwner &&
-      other.ownerId == ownerId &&
-      other.type == type;
+      other is StoryOwner && other.ownerId == ownerId && other.type == type;
 
   @override
   int get hashCode => Object.hash(ownerId, type);
@@ -119,8 +117,8 @@ class StoryMedia {
     final height = parseIntOrNull(map['height']);
     switch (typeStr) {
       case 'PHOTO':
-        final url =
-            (map['photoUrl'] ?? map['baseUrl'] ?? map['url'])?.toString();
+        final url = (map['photoUrl'] ?? map['baseUrl'] ?? map['url'])
+            ?.toString();
         return StoryMedia(
           type: AttachmentType.photo,
           url: url,

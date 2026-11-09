@@ -73,9 +73,8 @@ class LottieHoldScope extends InheritedWidget {
     required super.child,
   });
 
-  static ValueListenable<bool>? of(BuildContext context) => context
-      .dependOnInheritedWidgetOfExactType<LottieHoldScope>()
-      ?.isHeld;
+  static ValueListenable<bool>? of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<LottieHoldScope>()?.isHeld;
 
   @override
   bool updateShouldNotify(LottieHoldScope oldWidget) =>

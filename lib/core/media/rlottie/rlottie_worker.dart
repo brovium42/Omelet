@@ -112,12 +112,14 @@ void rlottieWorkerMain(SendPort toMain) {
         outCount = (durationMs / 1000.0 * _maxCacheFps).round().clamp(2, total);
       }
       final outFps = durationMs <= 0 ? fps : outCount * 1000.0 / durationMs;
-      toMain.send(ClipMeta(
-        jobId: job.jobId,
-        totalFrame: outCount,
-        frameRate: outFps,
-        durationMs: durationMs,
-      ));
+      toMain.send(
+        ClipMeta(
+          jobId: job.jobId,
+          totalFrame: outCount,
+          frameRate: outFps,
+          durationMs: durationMs,
+        ),
+      );
 
       final px = job.px;
       final buffer = calloc<Uint32>(px * px);
@@ -129,12 +131,16 @@ void rlottieWorkerMain(SendPort toMain) {
               ? i
               : (i * (total - 1) / (outCount - 1)).round().clamp(0, total - 1);
           rl.render(anim, src, buffer, px);
-          toMain.send(RenderedFrame(
-            jobId: job.jobId,
-            index: i,
-            data: TransferableTypedData.fromList([Uint8List.fromList(byteView)]),
-            px: px,
-          ));
+          toMain.send(
+            RenderedFrame(
+              jobId: job.jobId,
+              index: i,
+              data: TransferableTypedData.fromList([
+                Uint8List.fromList(byteView),
+              ]),
+              px: px,
+            ),
+          );
         }
       } finally {
         calloc.free(buffer);
@@ -148,4 +154,3 @@ void rlottieWorkerMain(SendPort toMain) {
     }
   });
 }
-

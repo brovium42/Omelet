@@ -11,7 +11,7 @@ import '../../core/protocol/opcode_map.dart';
 import '../../core/protocol/packet.dart';
 import '../../core/storage/app_database.dart';
 import '../../core/storage/token_storage.dart';
-import '../config/komet_settings.dart';
+import '../config/omelet_settings.dart';
 import '../utils/logger.dart';
 import 'fkm_bridge.dart';
 import 'push_service.dart';
@@ -22,7 +22,7 @@ const _hiddenPreview = 'Новое сообщение';
 /// FKM — уведомления через собственное фоновое соединение, без FCM.
 ///
 /// Пуш из сокета превращается в тот же набор полей, что присылает FCM, и
-/// отрисовывается нативным `KometNotifier` — общий код с пушевой версией.
+/// отрисовывается нативным `OmeletNotifier` — общий код с пушевой версией.
 class FkmController {
   FkmController._();
   static final FkmController instance = FkmController._();
@@ -80,9 +80,8 @@ class FkmController {
     unawaited(FkmBridge.instance.setConnected(state == SessionState.online));
   }
 
-  Future<void> _pushConnectionState() => FkmBridge.instance.setConnected(
-    _api?.state == SessionState.online,
-  );
+  Future<void> _pushConnectionState() =>
+      FkmBridge.instance.setConnected(_api?.state == SessionState.online);
 
   /// Входящий звонок, когда приложение не на переднем плане.
   ///
@@ -196,7 +195,7 @@ class FkmController {
       FkmBridge.instance.removeMessage({
         'mc': '$chatId',
         'msgid': msgId,
-        'keep': KometSettings.viewDeleted.value ? 'true' : 'false',
+        'keep': OmeletSettings.viewDeleted.value ? 'true' : 'false',
       });
 
   Future<void> _editNotification(

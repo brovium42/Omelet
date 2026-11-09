@@ -12,11 +12,10 @@ import '../../../core/config/app_fonts.dart';
 import '../../../core/config/app_shape.dart';
 import '../../../backend/modules/account/account_models.dart';
 
-
 String _passwordErrorText(Object error, AppLocalizations l10n) =>
     error is WrongPasswordException
-        ? l10n.passwordEntryWrongPassword
-        : l10n.devicesGenericError('$error');
+    ? l10n.passwordEntryWrongPassword
+    : l10n.devicesGenericError('$error');
 
 class PasswordEntryScreen extends StatefulWidget {
   const PasswordEntryScreen({super.key});

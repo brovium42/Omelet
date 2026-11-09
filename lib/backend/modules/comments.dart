@@ -11,11 +11,7 @@ class CommentsInfo {
   final String postId;
   final int? totalCount;
   final int? updatedAt;
-  const CommentsInfo({
-    required this.postId,
-    this.totalCount,
-    this.updatedAt,
-  });
+  const CommentsInfo({required this.postId, this.totalCount, this.updatedAt});
 
   factory CommentsInfo.fromPayload(String postId, Map payload) {
     final raw = payload['totalCount'];
@@ -98,7 +94,8 @@ class CommentsModule {
 
     final link = msg['link'];
     final postId =
-        (payload['postId'] ?? (link is Map ? link['postId'] : null) ??
+        (payload['postId'] ??
+                (link is Map ? link['postId'] : null) ??
                 msg['postId'])
             ?.toString();
     if (postId == null || postId.isEmpty) return;

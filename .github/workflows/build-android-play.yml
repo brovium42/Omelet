@@ -55,12 +55,12 @@ jobs:
             echo "PLAY_KEYSTORE_BASE64 secret not set — refusing to produce unsigned Play artifacts."
             exit 1
           fi
-          echo "$PLAY_KEYSTORE_BASE64" | base64 -d > android/app/komet-upload.jks
+          echo "$PLAY_KEYSTORE_BASE64" | base64 -d > android/app/omelet-upload.jks
           {
             echo "storePassword=$PLAY_KEYSTORE_PASSWORD"
             echo "keyPassword=$PLAY_KEY_PASSWORD"
             echo "keyAlias=$PLAY_KEY_ALIAS"
-            echo "storeFile=komet-upload.jks"
+            echo "storeFile=omelet-upload.jks"
           } > android/key.properties
 
       - name: Build Universal APK
@@ -95,7 +95,7 @@ jobs:
       - name: Upload Universal APK
         uses: actions/upload-artifact@v4
         with:
-          name: komet-play-universal
+          name: omelet-play-universal
           path: build/app/outputs/flutter-apk/app-store-release.apk
           if-no-files-found: error
           retention-days: 30
@@ -103,7 +103,7 @@ jobs:
       - name: Upload arm64-v8a APK
         uses: actions/upload-artifact@v4
         with:
-          name: komet-play-arm64-v8a
+          name: omelet-play-arm64-v8a
           path: build/app/outputs/flutter-apk/app-arm64-v8a-store-release.apk
           if-no-files-found: error
           retention-days: 30
@@ -111,7 +111,7 @@ jobs:
       - name: Upload armeabi-v7a APK
         uses: actions/upload-artifact@v4
         with:
-          name: komet-play-armeabi-v7a
+          name: omelet-play-armeabi-v7a
           path: build/app/outputs/flutter-apk/app-armeabi-v7a-store-release.apk
           if-no-files-found: error
           retention-days: 30
@@ -119,7 +119,7 @@ jobs:
       - name: Upload x86_64 APK
         uses: actions/upload-artifact@v4
         with:
-          name: komet-play-x86_64
+          name: omelet-play-x86_64
           path: build/app/outputs/flutter-apk/app-x86_64-store-release.apk
           if-no-files-found: error
           retention-days: 30
@@ -127,7 +127,7 @@ jobs:
       - name: Upload App Bundle
         uses: actions/upload-artifact@v4
         with:
-          name: komet-play-aab
+          name: omelet-play-aab
           path: build/app/outputs/bundle/storeRelease/app-store-release.aab
           if-no-files-found: error
           retention-days: 30
@@ -135,7 +135,7 @@ jobs:
       - name: Upload debug symbols
         uses: actions/upload-artifact@v4
         with:
-          name: komet-play-symbols
+          name: omelet-play-symbols
           path: build/symbols
           if-no-files-found: error
           retention-days: 90

@@ -1,7 +1,7 @@
 import Flutter
 import UIKit
 
-final class KometStreamHandler: NSObject, FlutterStreamHandler {
+final class OmeletStreamHandler: NSObject, FlutterStreamHandler {
   private let onSink: (FlutterEventSink?) -> Void
 
   init(onSink: @escaping (FlutterEventSink?) -> Void) {
@@ -26,15 +26,15 @@ final class KometStreamHandler: NSObject, FlutterStreamHandler {
 @objc class AppDelegate: FlutterAppDelegate {
   private var channels: [FlutterMethodChannel] = []
   private var eventChannels: [FlutterEventChannel] = []
-  private var streamHandlers: [KometStreamHandler] = []
-  private var videoNote: KometVideoNote?
+  private var streamHandlers: [OmeletStreamHandler] = []
+  private var videoNote: OmeletVideoNote?
 
   override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
-    KometNotifications.shared.start()
+    OmeletNotifications.shared.start()
 
     if let controller = window?.rootViewController as? FlutterViewController {
       let messenger = controller.binaryMessenger
@@ -57,7 +57,7 @@ final class KometStreamHandler: NSObject, FlutterStreamHandler {
 
   private func events(_ name: String, _ messenger: FlutterBinaryMessenger,
                       _ onSink: @escaping (FlutterEventSink?) -> Void) {
-    let handler = KometStreamHandler(onSink: onSink)
+    let handler = OmeletStreamHandler(onSink: onSink)
     let channel = FlutterEventChannel(name: name, binaryMessenger: messenger)
     channel.setStreamHandler(handler)
     streamHandlers.append(handler)
@@ -65,7 +65,7 @@ final class KometStreamHandler: NSObject, FlutterStreamHandler {
   }
 
   private func registerAppIcon(_ messenger: FlutterBinaryMessenger) {
-    method("ru.komet.app/app_icon", messenger) { call, result in
+    method("ru.omelet.app/app_icon", messenger) { call, result in
       switch call.method {
       case "getAppIcon":
         result(UIApplication.shared.alternateIconName)
@@ -100,23 +100,23 @@ final class KometStreamHandler: NSObject, FlutterStreamHandler {
   }
 
   private func registerVideo(_ messenger: FlutterBinaryMessenger) {
-    method("ru.komet.app/video", messenger) { call, result in
-      KometVideo.shared.handle(call, result: result)
+    method("ru.omelet.app/video", messenger) { call, result in
+      OmeletVideo.shared.handle(call, result: result)
     }
   }
 
   private func registerVideoNote(_ messenger: FlutterBinaryMessenger) {
-    guard let textures = registrar(forPlugin: "KometVideoNote")?.textures() else { return }
+    guard let textures = registrar(forPlugin: "OmeletVideoNote")?.textures() else { return }
 
-    method("ru.komet.app/video_note", messenger) { [weak self] call, result in
+    method("ru.omelet.app/video_note", messenger) { [weak self] call, result in
       guard let self = self else { return }
       switch call.method {
       case "permission":
-        KometVideoNote.requestPermission(result)
+        OmeletVideoNote.requestPermission(result)
       case "init":
         let args = call.arguments as? [String: Any] ?? [:]
         self.videoNote?.dispose()
-        let recorder = KometVideoNote(registry: textures)
+        let recorder = OmeletVideoNote(registry: textures)
         self.videoNote = recorder
         recorder.initialize(
           front: (args["front"] as? NSNumber)?.boolValue ?? true,
@@ -143,7 +143,7 @@ final class KometStreamHandler: NSObject, FlutterStreamHandler {
   }
 
   private func withRecorder(_ result: @escaping FlutterResult,
-                            _ body: (KometVideoNote) -> Void) {
+                            _ body: (OmeletVideoNote) -> Void) {
     guard let recorder = videoNote else {
       result(FlutterError(code: "NOT_READY", message: "recorder not initialized", details: nil))
       return
@@ -152,7 +152,7 @@ final class KometStreamHandler: NSObject, FlutterStreamHandler {
   }
 
   private func registerScreen(_ messenger: FlutterBinaryMessenger) {
-    method("ru.komet.app/screen", messenger) { call, result in
+    method("ru.omelet.app/screen", messenger) { call, result in
       switch call.method {
       case "setKeepAwake":
         let enabled = ((call.arguments as? [String: Any])?["enabled"] as? NSNumber)?.boolValue ?? false
@@ -167,11 +167,11 @@ final class KometStreamHandler: NSObject, FlutterStreamHandler {
   }
 
   private func registerNotifications(_ messenger: FlutterBinaryMessenger) {
-    method("ru.komet.app/notifications", messenger) { call, result in
-      KometNotifications.shared.handle(call, result: result)
+    method("ru.omelet.app/notifications", messenger) { call, result in
+      OmeletNotifications.shared.handle(call, result: result)
     }
-    events("ru.komet.app/notification_events", messenger) { sink in
-      KometNotifications.shared.attach(sink)
+    events("ru.omelet.app/notification_events", messenger) { sink in
+      OmeletNotifications.shared.attach(sink)
     }
   }
 }

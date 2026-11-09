@@ -7,7 +7,8 @@ const int _avatarTargetBytes = 900 * 1024;
 /// Maximum accepted size for a user-picked avatar before compression.
 const int kMaxAvatarBytes = 8 * 1024 * 1024;
 
-Future<Uint8List?> compressAvatar(Uint8List input) => compute(_encodeAvatar, input);
+Future<Uint8List?> compressAvatar(Uint8List input) =>
+    compute(_encodeAvatar, input);
 
 Future<Uint8List?> encodeRgbaToJpeg(Uint8List rgba, int width, int height) =>
     compute(_encodeRgba, (rgba, width, height));
@@ -29,7 +30,9 @@ Uint8List? _encodeAvatar(Uint8List input) {
   final decoded = img.decodeImage(input);
   if (decoded == null) return null;
   final oriented = img.bakeOrientation(decoded);
-  final image = oriented.width > _avatarMaxDimension || oriented.height > _avatarMaxDimension
+  final image =
+      oriented.width > _avatarMaxDimension ||
+          oriented.height > _avatarMaxDimension
       ? img.copyResize(
           oriented,
           width: oriented.width >= oriented.height ? _avatarMaxDimension : null,

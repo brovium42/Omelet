@@ -104,7 +104,9 @@ class DominantColorCache {
       final darkest = red < green
           ? (red < blue ? red : blue)
           : (green < blue ? green : blue);
-      final saturation = brightest <= 0 ? 0.0 : (brightest - darkest) / brightest;
+      final saturation = brightest <= 0
+          ? 0.0
+          : (brightest - darkest) / brightest;
 
       final weight = (alpha / 255) * (_achromaticFloor + saturation);
       accumulatedRed += red * weight;

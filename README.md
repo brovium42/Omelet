@@ -16,7 +16,7 @@
 ## Сборка из исходного кода
 ```console
 $ flutter pub get
-$ flutter build apk --release --flavor komet
+$ flutter build apk --release --flavor omelet
 $ flutter build [windows|linux] [--release]
 ```
 

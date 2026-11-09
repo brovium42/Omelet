@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 
-import '../../../../core/config/komet_settings.dart';
+import '../../../../core/config/omelet_settings.dart';
 
 class StickerPanelController {
   StickerPanelController({
@@ -66,7 +66,7 @@ class StickerPanelController {
   }
 
   void _sendTyping() {
-    if (KometSettings.ghostMode.value) return;
+    if (OmeletSettings.ghostMode.value) return;
     onSendTyping();
   }
 

@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:komet/frontend/widgets/composer_morph_icon.dart';
-import 'package:komet/frontend/widgets/glossy_pill.dart';
+import 'package:omelet/frontend/widgets/composer_morph_icon.dart';
+import 'package:omelet/frontend/widgets/glossy_pill.dart';
 import 'package:lottie/lottie.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -40,8 +40,7 @@ void main() {
       for (final path in _assets) {
         final file = File(path);
         expect(file.existsSync(), isTrue, reason: '$path отсутствует');
-        final doc =
-            jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
+        final doc = jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
         expect(doc['w'], doc['h'], reason: '$path должен быть квадратным');
         expect(doc['op'], greaterThan(0));
         expect(_paths(doc), isNotEmpty);
@@ -54,7 +53,11 @@ void main() {
             jsonDecode(File(path).readAsStringSync()) as Map<String, dynamic>;
         for (final shape in _paths(doc)) {
           final frames = (shape['ks'] as Map)['k'] as List;
-          expect(frames.length, 2, reason: '$path: ожидались две ключевые точки');
+          expect(
+            frames.length,
+            2,
+            reason: '$path: ожидались две ключевые точки',
+          );
           final from = ((frames.first as Map)['s'] as List).first as Map;
           final to = ((frames.last as Map)['s'] as List).first as Map;
           for (final key in ['v', 'i', 'o']) {
@@ -146,7 +149,9 @@ void main() {
       }
     });
 
-    testWidgets('морф переживает появление обработчика нажатия', (tester) async {
+    testWidgets('морф переживает появление обработчика нажатия', (
+      tester,
+    ) async {
       Widget host(bool sendMode) => MaterialApp(
         home: Scaffold(
           body: Center(

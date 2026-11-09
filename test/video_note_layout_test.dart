@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:komet/backend/modules/messages.dart';
-import 'package:komet/frontend/widgets/attachment/bubbles/video_note_bubble.dart';
-import 'package:komet/frontend/widgets/message_bubble.dart';
-import 'package:komet/l10n/app_localizations.dart';
-import 'package:komet/models/attachment.dart';
+import 'package:omelet/backend/modules/messages.dart';
+import 'package:omelet/frontend/widgets/attachment/bubbles/video_note_bubble.dart';
+import 'package:omelet/frontend/widgets/message_bubble.dart';
+import 'package:omelet/l10n/app_localizations.dart';
+import 'package:omelet/models/attachment.dart';
 
 const int _me = 1;
 const int _peer = 7;
@@ -29,7 +29,10 @@ CachedMessage _note({required int durationMs}) => CachedMessage(
   ],
 );
 
-Future<void> _pumpNote(WidgetTester tester, {required double screenWidth}) async {
+Future<void> _pumpNote(
+  WidgetTester tester, {
+  required double screenWidth,
+}) async {
   tester.view.physicalSize = Size(screenWidth * 2, 2400);
   tester.view.devicePixelRatio = 2;
   addTearDown(tester.view.reset);

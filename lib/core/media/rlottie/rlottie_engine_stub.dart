@@ -22,8 +22,11 @@ class RlottieEngine {
 
   bool get available => false;
 
-  Future<RlottieClip?> acquire(String url, int px, {String? inlineJson}) async =>
-      null;
+  Future<RlottieClip?> acquire(
+    String url,
+    int px, {
+    String? inlineJson,
+  }) async => null;
 
   Future<void> prewarm(String url, int px) async {}
 

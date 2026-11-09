@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:komet/backend/modules/messages.dart';
-import 'package:komet/frontend/widgets/message_bubble.dart';
-import 'package:komet/l10n/app_localizations.dart';
+import 'package:omelet/backend/modules/messages.dart';
+import 'package:omelet/frontend/widgets/message_bubble.dart';
+import 'package:omelet/l10n/app_localizations.dart';
 
 const int _me = 1;
 
@@ -57,11 +57,14 @@ double _horizontalDrift(WidgetTester tester, String label) {
 
 void main() {
   testWidgets('a clipboard button keeps its label centred', (tester) async {
-    await _pump(tester, _withButton({
-      'type': 'CLIPBOARD',
-      'text': 'Копировать',
-      'payload': '123456',
-    }));
+    await _pump(
+      tester,
+      _withButton({
+        'type': 'CLIPBOARD',
+        'text': 'Копировать',
+        'payload': '123456',
+      }),
+    );
 
     expect(find.text('Копировать'), findsOneWidget);
     expect(_horizontalDrift(tester, 'Копировать').abs(), lessThan(0.5));
@@ -70,11 +73,10 @@ void main() {
   testWidgets('a plain callback button keeps its label centred', (
     tester,
   ) async {
-    await _pump(tester, _withButton({
-      'type': 'CALLBACK',
-      'text': 'Продолжить',
-      'payload': 'go',
-    }));
+    await _pump(
+      tester,
+      _withButton({'type': 'CALLBACK', 'text': 'Продолжить', 'payload': 'go'}),
+    );
 
     expect(_horizontalDrift(tester, 'Продолжить').abs(), lessThan(0.5));
   });

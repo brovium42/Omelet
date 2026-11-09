@@ -166,8 +166,9 @@ class DigitalIdProfile {
       gender: map['gender'] as String?,
       snils: map['snils'] as String?,
       inn: map['inn'] as String?,
-      registrationAddress:
-          address is Map ? DigitalIdAddress.fromMap(address) : null,
+      registrationAddress: address is Map
+          ? DigitalIdAddress.fromMap(address)
+          : null,
       documents: documents,
     );
   }

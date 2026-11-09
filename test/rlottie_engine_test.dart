@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:komet/core/media/rlottie/rlottie_engine.dart';
+import 'package:omelet/core/media/rlottie/rlottie_engine.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -16,13 +16,19 @@ void main() {
     }
     RlottieEngine.debugLibraryPath = libPath;
 
-    expect(RlottieEngine.instance.available, isTrue,
-        reason: 'library should open');
+    expect(
+      RlottieEngine.instance.available,
+      isTrue,
+      reason: 'library should open',
+    );
 
     final json = File('assets/lottie/ic_settings.json').readAsStringSync();
     const px = 256;
-    final clip = await RlottieEngine.instance
-        .acquire('poc://ic_settings', px, inlineJson: json);
+    final clip = await RlottieEngine.instance.acquire(
+      'poc://ic_settings',
+      px,
+      inlineJson: json,
+    );
 
     expect(clip, isNotNull);
     expect(clip!.frameCount, greaterThan(1));
@@ -52,7 +58,11 @@ void main() {
       }
     }
     expect(opaque, greaterThan(0), reason: 'gear pixels present');
-    expect(transparent, greaterThan(0), reason: 'transparent background present');
+    expect(
+      transparent,
+      greaterThan(0),
+      reason: 'transparent background present',
+    );
 
     final png = await mid.toByteData(format: ui.ImageByteFormat.png);
     final out = Platform.environment['RLOTTIE_PNG_OUT'];

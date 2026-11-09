@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:komet/core/share/share_labels.dart';
-import 'package:komet/models/shared_payload.dart';
+import 'package:omelet/core/share/share_labels.dart';
+import 'package:omelet/models/shared_payload.dart';
 
 late Directory _dir;
 

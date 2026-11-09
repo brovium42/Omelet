@@ -204,14 +204,10 @@ class CallController {
       params: call.params,
       role: CallRole.callee,
     );
-    return _launch(
-      session,
-      () async {
-        await session.start();
-        await session.accept();
-      },
-      caller: call.callerName,
-    );
+    return _launch(session, () async {
+      await session.start();
+      await session.accept();
+    }, caller: call.callerName);
   }
 
   Future<void> rejectIncoming(IncomingCall call) async {

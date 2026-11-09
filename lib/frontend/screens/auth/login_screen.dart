@@ -3,9 +3,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:material_symbols_icons/symbols.dart';
-import 'package:komet/core/config/countries.dart';
-import 'package:komet/l10n/app_localizations.dart';
-import 'package:komet/l10n/terms_of_service.dart';
+import 'package:omelet/core/config/countries.dart';
+import 'package:omelet/l10n/app_localizations.dart';
+import 'package:omelet/l10n/terms_of_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'code_confirmation_screen.dart';
 import 'token_login_screen.dart';
@@ -207,7 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   onTap: () {
                     Navigator.pop(sheetContext);
-                    KometApp.stateOf(
+                    OmeletApp.stateOf(
                       appContext,
                     )?.applyLocale(const Locale('ru'));
                   },
@@ -223,7 +223,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   onTap: () {
                     Navigator.pop(sheetContext);
-                    KometApp.stateOf(
+                    OmeletApp.stateOf(
                       appContext,
                     )?.applyLocale(const Locale('en'));
                   },

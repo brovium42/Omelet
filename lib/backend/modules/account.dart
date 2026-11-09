@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import '../api.dart';
 import '../../core/config/debug_test.dart';
-import '../../core/config/komet_settings.dart';
+import '../../core/config/omelet_settings.dart';
 import '../../core/protocol/chat_cache_fingerprint.dart';
 import '../../core/protocol/opcode_map.dart';
 import '../../core/protocol/packet.dart';
@@ -534,7 +534,7 @@ class AccountModule {
   }) {
     final payload = <dynamic, dynamic>{
       'token': token,
-      'interactive': interactive ?? !KometSettings.ghostMode.value,
+      'interactive': interactive ?? !OmeletSettings.ghostMode.value,
       'exp': {
         'chatsCountGroups': Uint8List.fromList([0x0b, 0x32]),
       },
@@ -645,7 +645,9 @@ class AccountModule {
   Future<ProfileData> _resurrectProfile(int accountId) async {
     if (DebugTest.berserk) {
       await AppDatabase.deleteAccount(accountId);
-      logger.w('login: [BERSERK] профиль удалён из БД, форсирую регенерацию (id=$accountId)');
+      logger.w(
+        'login: [BERSERK] профиль удалён из БД, форсирую регенерацию (id=$accountId)',
+      );
     } else {
       final cached = await AppDatabase.loadProfile(accountId);
       if (cached != null) return cached;
@@ -656,11 +658,15 @@ class AccountModule {
     try {
       final fetched = await ContactsModule.fetchSelfProfile(_api, accountId);
       if (fetched != null) {
-        logger.i('login: профиль восстановлен через CONTACT_INFO (id=$accountId)');
+        logger.i(
+          'login: профиль восстановлен через CONTACT_INFO (id=$accountId)',
+        );
         return fetched;
       }
     } catch (e) {
-      logger.w('login: восстановление профиля через CONTACT_INFO не удалось: $e');
+      logger.w(
+        'login: восстановление профиля через CONTACT_INFO не удалось: $e',
+      );
     }
 
     logger.w('login: профиль недоступен, использую заглушку (id=$accountId)');

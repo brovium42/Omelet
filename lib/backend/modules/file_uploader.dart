@@ -101,39 +101,35 @@ class FileUploader {
         var status = 0;
         String? error;
         final done = Completer<void>();
-        sub =
-            session
-                .uploadFilePath(
-                  url: info.url,
-                  path: file.path,
-                  filename: filename,
-                  connection: 'close',
-                )
-                .listen(
-                  (e) {
-                    switch (e) {
-                      case kb.UploadEvent_Progress(:final sent, :final total):
-                        ctrl.add(
-                          UploadProgress(
-                            sent: sent.toInt(),
-                            total: total.toInt(),
-                          ),
-                        );
-                      case kb.UploadEvent_Done(status: final s):
-                        status = s;
-                      case kb.UploadEvent_Error(:final message):
-                        error = message;
-                    }
-                  },
-                  onError: (Object err) {
-                    error = err.toString();
-                    if (!done.isCompleted) done.complete();
-                  },
-                  onDone: () {
-                    if (!done.isCompleted) done.complete();
-                  },
-                  cancelOnError: true,
-                );
+        sub = session
+            .uploadFilePath(
+              url: info.url,
+              path: file.path,
+              filename: filename,
+              connection: 'close',
+            )
+            .listen(
+              (e) {
+                switch (e) {
+                  case kb.UploadEvent_Progress(:final sent, :final total):
+                    ctrl.add(
+                      UploadProgress(sent: sent.toInt(), total: total.toInt()),
+                    );
+                  case kb.UploadEvent_Done(status: final s):
+                    status = s;
+                  case kb.UploadEvent_Error(:final message):
+                    error = message;
+                }
+              },
+              onError: (Object err) {
+                error = err.toString();
+                if (!done.isCompleted) done.complete();
+              },
+              onDone: () {
+                if (!done.isCompleted) done.complete();
+              },
+              cancelOnError: true,
+            );
         await done.future;
         if (cancelled) return;
         if (error != null) {

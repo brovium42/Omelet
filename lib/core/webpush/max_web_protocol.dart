@@ -35,9 +35,7 @@ abstract class MaxWebFraming {
     required int opcode,
     Object? payload,
   }) {
-    final body = payload == null
-        ? Uint8List(0)
-        : MaxMsgpack.encode(payload);
+    final body = payload == null ? Uint8List(0) : MaxMsgpack.encode(payload);
     final frame = Uint8List(headerSize + body.length);
     final view = ByteData.view(frame.buffer);
 
@@ -96,14 +94,21 @@ abstract class Lz4Block {
 
       var literalLength = token >> 4;
       if (literalLength == 15) {
-        literalLength += _readLengthExtension(source, () => input, (v) => input = v);
+        literalLength += _readLengthExtension(
+          source,
+          () => input,
+          (v) => input = v,
+        );
       }
 
       if (written + literalLength > output.length) {
         throw const FormatException('Lz4Block: литералы не помещаются');
       }
-      output.setRange(written, written + literalLength,
-          Uint8List.sublistView(source, input, input + literalLength));
+      output.setRange(
+        written,
+        written + literalLength,
+        Uint8List.sublistView(source, input, input + literalLength),
+      );
       written += literalLength;
       input += literalLength;
 
@@ -117,7 +122,11 @@ abstract class Lz4Block {
 
       var matchLength = token & 0x0F;
       if (matchLength == 15) {
-        matchLength += _readLengthExtension(source, () => input, (v) => input = v);
+        matchLength += _readLengthExtension(
+          source,
+          () => input,
+          (v) => input = v,
+        );
       }
       matchLength += 4;
 
@@ -191,7 +200,9 @@ abstract class MaxMsgpack {
         _write(sink, item);
       });
     } else {
-      throw ArgumentError('MaxMsgpack: неподдерживаемый тип ${value.runtimeType}');
+      throw ArgumentError(
+        'MaxMsgpack: неподдерживаемый тип ${value.runtimeType}',
+      );
     }
   }
 
@@ -306,11 +317,8 @@ abstract class MaxMsgpack {
 }
 
 class _Reader {
-  _Reader(this._bytes) : _view = ByteData.view(
-          _bytes.buffer,
-          _bytes.offsetInBytes,
-          _bytes.length,
-        );
+  _Reader(this._bytes)
+    : _view = ByteData.view(_bytes.buffer, _bytes.offsetInBytes, _bytes.length);
 
   final Uint8List _bytes;
   final ByteData _view;
@@ -393,7 +401,9 @@ class _Reader {
     if (byte == 0xC8) return _ext(_u16());
     if (byte == 0xC9) return _ext(_u32());
 
-    throw FormatException('MaxMsgpack: неизвестный маркер 0x${byte.toRadixString(16)}');
+    throw FormatException(
+      'MaxMsgpack: неизвестный маркер 0x${byte.toRadixString(16)}',
+    );
   }
 
   static const int _numberExtType = 1;

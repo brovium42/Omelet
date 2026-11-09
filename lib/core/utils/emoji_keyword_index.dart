@@ -32,8 +32,7 @@ class EmojiKeywordIndex {
     });
   }
 
-  List<String> get all =>
-      List.unmodifiable(_entries.map((e) => e.emoji));
+  List<String> get all => List.unmodifiable(_entries.map((e) => e.emoji));
 
   List<String> search(String query) {
     final targets = resolve(query);

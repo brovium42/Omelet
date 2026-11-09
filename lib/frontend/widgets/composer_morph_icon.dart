@@ -118,7 +118,9 @@ class _ComposerMorphIconState extends State<ComposerMorphIcon>
         controller: _controller,
         fit: BoxFit.contain,
         delegates: LottieDelegates(
-          values: [ValueDelegate.color(const ['**'], value: widget.color)],
+          values: [
+            ValueDelegate.color(const ['**'], value: widget.color),
+          ],
         ),
       ),
     );

@@ -57,7 +57,7 @@ class DigitalIdWebScreen extends StatelessWidget {
         final scheme = uri?.scheme ?? '';
         if (kDebugMode) {
           debugPrint(
-            '[KOMET-DID] nav: ${url.length > 140 ? url.substring(0, 140) : url}',
+            '[OMELET-DID] nav: ${url.length > 140 ? url.substring(0, 140) : url}',
           );
         }
         if (scheme != 'http' && scheme != 'https') {

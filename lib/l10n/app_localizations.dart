@@ -1994,11 +1994,11 @@ abstract class AppLocalizations {
   /// **'Not bad at all!'**
   String get appearancePreviewNotBad;
 
-  /// No description provided for @callKometDetectedNotification.
+  /// No description provided for @callOmeletDetectedNotification.
   ///
   /// In en, this message translates to:
-  /// **'This person uses Komet! :3'**
-  String get callKometDetectedNotification;
+  /// **'This person uses Omelet or Komet! :3'**
+  String get callOmeletDetectedNotification;
 
   /// No description provided for @callStatusConnecting.
   ///
@@ -2078,11 +2078,11 @@ abstract class AppLocalizations {
   /// **'Expand'**
   String get callTooltipExpand;
 
-  /// No description provided for @callTooltipKometHub.
+  /// No description provided for @callTooltipOmeletHub.
   ///
   /// In en, this message translates to:
   /// **'Omelet'**
-  String get callTooltipKometHub;
+  String get callTooltipOmeletHub;
 
   /// No description provided for @callInfoTitle.
   ///

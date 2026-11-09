@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:komet/frontend/screens/webapp/web_app_bridge.dart';
+import 'package:omelet/frontend/screens/webapp/web_app_bridge.dart';
 
 void main() {
   late List<(String, Map<String, dynamic>, bool)> sent;
@@ -43,10 +43,7 @@ void main() {
 
     expect(sent, hasLength(1));
     expect(sent.first.$1, 'WebAppGetLaunchContext');
-    expect(sent.first.$2, {
-      'requestId': 'r1',
-      'entryPoint': 'inline_button',
-    });
+    expect(sent.first.$2, {'requestId': 'r1', 'entryPoint': 'inline_button'});
   });
 
   test('answers viewport requests with the current webview size', () async {
@@ -66,7 +63,11 @@ void main() {
   test('rejects an unknown method with the client error code', () async {
     final bridge = buildBridge();
 
-    await bridge.handleEvent('WebAppSomethingElse', '{"requestId":"r3"}', false);
+    await bridge.handleEvent(
+      'WebAppSomethingElse',
+      '{"requestId":"r3"}',
+      false,
+    );
 
     expect(sent.first.$2['error'], {
       'code': 'client.unsupported_method.unsupported_method',
@@ -93,13 +94,11 @@ void main() {
     expect(sent, isEmpty);
 
     bridge.registerGesture();
-    await bridge.handleEvent(
-      'WebAppShare',
-      '{"requestId":"r5"}',
-      false,
-    );
+    await bridge.handleEvent('WebAppShare', '{"requestId":"r5"}', false);
 
-    expect(sent.single.$2['error'], {'code': 'client.web_app_share.invalid_request'});
+    expect(sent.single.$2['error'], {
+      'code': 'client.web_app_share.invalid_request',
+    });
   });
 
   test('ignores private-channel events when the channel is off', () async {
@@ -122,29 +121,32 @@ void main() {
     expect(sent, isEmpty);
   });
 
-  test('tracks the back button and closing behaviour the app asked for', () async {
-    final bridge = buildBridge();
+  test(
+    'tracks the back button and closing behaviour the app asked for',
+    () async {
+      final bridge = buildBridge();
 
-    expect(bridge.handlesBackButton, isFalse);
-    expect(bridge.needsCloseConfirmation, isFalse);
+      expect(bridge.handlesBackButton, isFalse);
+      expect(bridge.needsCloseConfirmation, isFalse);
 
-    await bridge.handleEvent(
-      'WebAppSetupBackButton',
-      '{"isVisible":true}',
-      false,
-    );
-    await bridge.handleEvent(
-      'WebAppSetupClosingBehavior',
-      '{"needConfirmation":true}',
-      false,
-    );
+      await bridge.handleEvent(
+        'WebAppSetupBackButton',
+        '{"isVisible":true}',
+        false,
+      );
+      await bridge.handleEvent(
+        'WebAppSetupClosingBehavior',
+        '{"needConfirmation":true}',
+        false,
+      );
 
-    expect(bridge.handlesBackButton, isTrue);
-    expect(bridge.needsCloseConfirmation, isTrue);
+      expect(bridge.handlesBackButton, isTrue);
+      expect(bridge.needsCloseConfirmation, isTrue);
 
-    bridge.notifyBackPressed();
-    expect(sent.single.$1, 'WebAppBackButtonPressed');
-  });
+      bridge.notifyBackPressed();
+      expect(sent.single.$1, 'WebAppBackButtonPressed');
+    },
+  );
 
   test('closes the screen when the app asks to', () async {
     final bridge = buildBridge();
@@ -163,10 +165,7 @@ void main() {
       false,
     );
 
-    expect(sent.first.$2, {
-      'requestId': 'r7',
-      'isScreenCaptureEnabled': true,
-    });
+    expect(sent.first.$2, {'requestId': 'r7', 'isScreenCaptureEnabled': true});
   });
 
   test('answers NFC availability without pretending to support it', () async {

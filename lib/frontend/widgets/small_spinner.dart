@@ -5,11 +5,7 @@ class SmallSpinner extends StatelessWidget {
   final double size;
   final Color? color;
 
-  const SmallSpinner({
-    super.key,
-    this.size = 26,
-    this.color,
-  });
+  const SmallSpinner({super.key, this.size = 26, this.color});
 
   @override
   Widget build(BuildContext context) {

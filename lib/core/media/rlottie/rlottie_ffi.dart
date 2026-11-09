@@ -6,8 +6,8 @@ import 'package:ffi/ffi.dart';
 typedef _InitNative = Void Function();
 typedef _VoidFn = void Function();
 
-typedef _FromDataNative = Pointer<Void> Function(
-    Pointer<Utf8>, Pointer<Utf8>, Pointer<Utf8>);
+typedef _FromDataNative =
+    Pointer<Void> Function(Pointer<Utf8>, Pointer<Utf8>, Pointer<Utf8>);
 
 typedef _SizeGetterNative = Size Function(Pointer<Void>);
 typedef _SizeGetter = int Function(Pointer<Void>);
@@ -15,10 +15,10 @@ typedef _SizeGetter = int Function(Pointer<Void>);
 typedef _DoubleGetterNative = Double Function(Pointer<Void>);
 typedef _DoubleGetter = double Function(Pointer<Void>);
 
-typedef _RenderNative = Void Function(
-    Pointer<Void>, Size, Pointer<Uint32>, Size, Size, Size);
-typedef _Render = void Function(
-    Pointer<Void>, int, Pointer<Uint32>, int, int, int);
+typedef _RenderNative =
+    Void Function(Pointer<Void>, Size, Pointer<Uint32>, Size, Size, Size);
+typedef _Render =
+    void Function(Pointer<Void>, int, Pointer<Uint32>, int, int, int);
 
 typedef _DestroyNative = Void Function(Pointer<Void>);
 typedef _Destroy = void Function(Pointer<Void>);
@@ -31,19 +31,26 @@ class RlottieBindings {
     _init = _lib.lookupFunction<_InitNative, _VoidFn>('lottie_init');
     _shutdown = _lib.lookupFunction<_InitNative, _VoidFn>('lottie_shutdown');
     _fromData = _lib.lookupFunction<_FromDataNative, _FromDataNative>(
-        'lottie_animation_from_data');
+      'lottie_animation_from_data',
+    );
     _totalFrame = _lib.lookupFunction<_SizeGetterNative, _SizeGetter>(
-        'lottie_animation_get_totalframe');
+      'lottie_animation_get_totalframe',
+    );
     _frameRate = _lib.lookupFunction<_DoubleGetterNative, _DoubleGetter>(
-        'lottie_animation_get_framerate');
+      'lottie_animation_get_framerate',
+    );
     _duration = _lib.lookupFunction<_DoubleGetterNative, _DoubleGetter>(
-        'lottie_animation_get_duration');
-    _render =
-        _lib.lookupFunction<_RenderNative, _Render>('lottie_animation_render');
-    _destroy = _lib
-        .lookupFunction<_DestroyNative, _Destroy>('lottie_animation_destroy');
+      'lottie_animation_get_duration',
+    );
+    _render = _lib.lookupFunction<_RenderNative, _Render>(
+      'lottie_animation_render',
+    );
+    _destroy = _lib.lookupFunction<_DestroyNative, _Destroy>(
+      'lottie_animation_destroy',
+    );
     _cacheSize = _lib.lookupFunction<_CacheSizeNative, _CacheSize>(
-        'lottie_configure_model_cache_size');
+      'lottie_configure_model_cache_size',
+    );
     _init();
   }
 

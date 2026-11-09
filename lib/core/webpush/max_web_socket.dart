@@ -81,7 +81,8 @@ class MaxWebSocketSession {
     _subscription = socket.listen(
       _onFrame,
       onError: (Object error) => _failAll(MaxWebException('сокет: $error')),
-      onDone: () => _failAll(const MaxWebException('соединение закрыто сервером')),
+      onDone: () =>
+          _failAll(const MaxWebException('соединение закрыто сервером')),
       cancelOnError: true,
     );
 
@@ -168,7 +169,9 @@ class MaxWebSocketSession {
         return MaxWebException(code, code: code);
       }
     }
-    return MaxWebException('опкод ${frame.opcode}: ошибка сервера (cmd=${frame.cmd})');
+    return MaxWebException(
+      'опкод ${frame.opcode}: ошибка сервера (cmd=${frame.cmd})',
+    );
   }
 
   void _failAll(MaxWebException error) {

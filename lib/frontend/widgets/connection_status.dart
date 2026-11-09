@@ -123,7 +123,8 @@ class ConnectionTitleText extends StatelessWidget {
   );
 }
 
-class ConnectionTitleBar extends StatelessWidget implements PreferredSizeWidget {
+class ConnectionTitleBar extends StatelessWidget
+    implements PreferredSizeWidget {
   final String titleText;
   final Color? backgroundColor;
 
@@ -175,9 +176,7 @@ class ConnectionSpinner extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Center(
-                  child: SmallSpinner(size: 20, color: cs.primary),
-                ),
+                child: Center(child: SmallSpinner(size: 20, color: cs.primary)),
               ),
       ),
     );

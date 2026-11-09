@@ -1,10 +1,10 @@
-package ru.komet.app
+package ru.omelet.app
 
 import android.content.Intent
 import io.flutter.plugin.common.EventChannel
 
 object ChatNotifications {
-    const val EXTRA_CHAT = "komet_chat"
+    const val EXTRA_CHAT = "omelet_chat"
 
     @Volatile
     var activeChatId: Long = 0L

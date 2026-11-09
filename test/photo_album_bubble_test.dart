@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:komet/backend/modules/messages.dart';
-import 'package:komet/frontend/widgets/message_bubble.dart';
-import 'package:komet/frontend/widgets/photo_viewer.dart';
-import 'package:komet/l10n/app_localizations.dart';
-import 'package:komet/models/attachment.dart';
+import 'package:omelet/backend/modules/messages.dart';
+import 'package:omelet/frontend/widgets/message_bubble.dart';
+import 'package:omelet/frontend/widgets/photo_viewer.dart';
+import 'package:omelet/l10n/app_localizations.dart';
+import 'package:omelet/models/attachment.dart';
 
 CachedMessage _album(List<PhotoAttachment> photos) => CachedMessage(
   id: '1',
@@ -27,7 +27,8 @@ List<PhotoAttachment> _remote(int count) => List.generate(
 
 List<PhotoAttachment> _local(int count) => List.generate(
   count,
-  (i) => PhotoAttachment(localPath: '/tmp/photo$i.jpg', width: 1200, height: 1600),
+  (i) =>
+      PhotoAttachment(localPath: '/tmp/photo$i.jpg', width: 1200, height: 1600),
 );
 
 Future<void> _pumpBubble(WidgetTester tester, CachedMessage message) async {
@@ -57,8 +58,9 @@ Future<void> _pumpBubble(WidgetTester tester, CachedMessage message) async {
   await tester.pump();
 }
 
-int _viewerIndex(WidgetTester tester) =>
-    tester.widget<PhotoViewerScreen>(find.byType(PhotoViewerScreen)).initialIndex;
+int _viewerIndex(WidgetTester tester) => tester
+    .widget<PhotoViewerScreen>(find.byType(PhotoViewerScreen))
+    .initialIndex;
 
 Size _bubbleSize(WidgetTester tester) => tester.getSize(
   find

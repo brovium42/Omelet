@@ -3,7 +3,7 @@ import CoreImage
 import Flutter
 import UIKit
 
-final class KometVideoNoteTexture: NSObject, FlutterTexture {
+final class OmeletVideoNoteTexture: NSObject, FlutterTexture {
   private let lock = NSLock()
   private var latest: CVPixelBuffer?
 
@@ -21,15 +21,15 @@ final class KometVideoNoteTexture: NSObject, FlutterTexture {
   }
 }
 
-final class KometVideoNote: NSObject {
+final class OmeletVideoNote: NSObject {
   private let registry: FlutterTextureRegistry
-  private let queue = DispatchQueue(label: "ru.komet.app.videonote", qos: .userInitiated)
+  private let queue = DispatchQueue(label: "ru.omelet.app.videonote", qos: .userInitiated)
   private let ciContext = CIContext(options: [.useSoftwareRenderer: false])
 
   private let session = AVCaptureSession()
   private let videoOutput = AVCaptureVideoDataOutput()
   private let audioOutput = AVCaptureAudioDataOutput()
-  private let texture = KometVideoNoteTexture()
+  private let texture = OmeletVideoNoteTexture()
 
   private var textureId: Int64 = 0
   private var deviceInput: AVCaptureDeviceInput?
@@ -207,12 +207,12 @@ final class KometVideoNote: NSObject {
     guard let device = AVCaptureDevice.default(
       .builtInWideAngleCamera, for: .video, position: position)
       ?? AVCaptureDevice.default(for: .video) else {
-      throw NSError(domain: "KometVideoNote", code: 1,
+      throw NSError(domain: "OmeletVideoNote", code: 1,
                     userInfo: [NSLocalizedDescriptionKey: "no camera found"])
     }
     let input = try AVCaptureDeviceInput(device: device)
     guard session.canAddInput(input) else {
-      throw NSError(domain: "KometVideoNote", code: 2,
+      throw NSError(domain: "OmeletVideoNote", code: 2,
                     userInfo: [NSLocalizedDescriptionKey: "camera input rejected"])
     }
     session.addInput(input)
@@ -270,7 +270,7 @@ final class KometVideoNote: NSObject {
   private func prepareWriter() throws {
     let directory = FileManager.default.temporaryDirectory
     let url = directory.appendingPathComponent(
-      "komet_note_\(Int(Date().timeIntervalSince1970 * 1000)).mp4")
+      "omelet_note_\(Int(Date().timeIntervalSince1970 * 1000)).mp4")
     try? FileManager.default.removeItem(at: url)
 
     let writer = try AVAssetWriter(outputURL: url, fileType: .mp4)
@@ -286,7 +286,7 @@ final class KometVideoNote: NSObject {
     let video = AVAssetWriterInput(mediaType: .video, outputSettings: videoSettings)
     video.expectsMediaDataInRealTime = true
     guard writer.canAdd(video) else {
-      throw NSError(domain: "KometVideoNote", code: 3,
+      throw NSError(domain: "OmeletVideoNote", code: 3,
                     userInfo: [NSLocalizedDescriptionKey: "video input rejected"])
     }
     writer.add(video)
@@ -310,7 +310,7 @@ final class KometVideoNote: NSObject {
       ])
 
     guard writer.startWriting() else {
-      throw NSError(domain: "KometVideoNote", code: 4,
+      throw NSError(domain: "OmeletVideoNote", code: 4,
                     userInfo: [NSLocalizedDescriptionKey: "writer refused to start"])
     }
 
@@ -363,7 +363,7 @@ final class KometVideoNote: NSObject {
   }
 }
 
-extension KometVideoNote: AVCaptureVideoDataOutputSampleBufferDelegate,
+extension OmeletVideoNote: AVCaptureVideoDataOutputSampleBufferDelegate,
                           AVCaptureAudioDataOutputSampleBufferDelegate {
   func captureOutput(
     _ output: AVCaptureOutput,

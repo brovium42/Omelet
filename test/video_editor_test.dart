@@ -5,9 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import 'package:komet/core/media/video_transcoder.dart';
-import 'package:komet/frontend/widgets/attachment/editor_common.dart';
-import 'package:komet/frontend/widgets/attachment/video_edit.dart';
+import 'package:omelet/core/media/video_transcoder.dart';
+import 'package:omelet/frontend/widgets/attachment/editor_common.dart';
+import 'package:omelet/frontend/widgets/attachment/video_edit.dart';
 
 class _FakePathProvider extends PathProviderPlatform
     with MockPlatformInterfaceMixin {
@@ -183,87 +183,93 @@ void main() {
     late Directory tmp;
 
     setUp(() {
-      tmp = Directory.systemTemp.createTempSync('komet_video_test');
+      tmp = Directory.systemTemp.createTempSync('omelet_video_test');
       PathProviderPlatform.instance = _FakePathProvider(tmp.path);
     });
 
     tearDown(() => tmp.deleteSync(recursive: true));
 
-    test('обрезает, кадрирует, масштабирует и убирает звук', () async {
-      if (!await _hasFfmpeg()) {
-        markTestSkipped('ffmpeg недоступен');
-        return;
-      }
-      final input = File('${tmp.path}/source.mp4');
-      final make = await Process.run('ffmpeg', [
-        '-y',
-        '-v',
-        'error',
-        '-f',
-        'lavfi',
-        '-i',
-        'testsrc2=size=640x480:rate=30:duration=4',
-        '-f',
-        'lavfi',
-        '-i',
-        'sine=frequency=440:duration=4',
-        '-c:v',
-        'libx264',
-        '-pix_fmt',
-        'yuv420p',
-        '-c:a',
-        'aac',
-        input.path,
-      ]);
-      expect(make.exitCode, 0, reason: '${make.stderr}');
+    test(
+      'обрезает, кадрирует, масштабирует и убирает звук',
+      () async {
+        if (!await _hasFfmpeg()) {
+          markTestSkipped('ffmpeg недоступен');
+          return;
+        }
+        final input = File('${tmp.path}/source.mp4');
+        final make = await Process.run('ffmpeg', [
+          '-y',
+          '-v',
+          'error',
+          '-f',
+          'lavfi',
+          '-i',
+          'testsrc2=size=640x480:rate=30:duration=4',
+          '-f',
+          'lavfi',
+          '-i',
+          'sine=frequency=440:duration=4',
+          '-c:v',
+          'libx264',
+          '-pix_fmt',
+          'yuv420p',
+          '-c:a',
+          'aac',
+          input.path,
+        ]);
+        expect(make.exitCode, 0, reason: '${make.stderr}');
 
-      final info = await VideoTranscoder.probe(input.path);
-      expect(info, isNotNull);
-      expect(info!.width, 640);
-      expect(info.height, 480);
-      expect(info.hasAudio, isTrue);
-      expect(info.durationMs, greaterThan(3500));
+        final info = await VideoTranscoder.probe(input.path);
+        expect(info, isNotNull);
+        expect(info!.width, 640);
+        expect(info.height, 480);
+        expect(info.hasAudio, isTrue);
+        expect(info.durationMs, greaterThan(3500));
 
-      final source = Size(info.width.toDouble(), info.height.toDouble());
-      final edit = VideoEditState()
-        ..sourceDuration = Duration(milliseconds: info.durationMs)
-        ..start = const Duration(milliseconds: 500)
-        ..end = const Duration(milliseconds: 2500)
-        ..muted = true
-        ..maxShortSide = 240
-        ..adjust = ColorAdjust(contrast: 0.3, vignette: 0.4);
-      final viewport = const Size(400, 300);
-      final fitted = CropGeometry(source: source).fittedRect(viewport);
-      edit.crop = _cropEdit(
-        viewport: viewport,
-        crop: Rect.fromLTRB(
-          fitted.left,
-          fitted.top,
-          fitted.center.dx,
-          fitted.bottom,
-        ),
-      );
+        final source = Size(info.width.toDouble(), info.height.toDouble());
+        final edit = VideoEditState()
+          ..sourceDuration = Duration(milliseconds: info.durationMs)
+          ..start = const Duration(milliseconds: 500)
+          ..end = const Duration(milliseconds: 2500)
+          ..muted = true
+          ..maxShortSide = 240
+          ..adjust = ColorAdjust(contrast: 0.3, vignette: 0.4);
+        final viewport = const Size(400, 300);
+        final fitted = CropGeometry(source: source).fittedRect(viewport);
+        edit.crop = _cropEdit(
+          viewport: viewport,
+          crop: Rect.fromLTRB(
+            fitted.left,
+            fitted.top,
+            fitted.center.dx,
+            fitted.bottom,
+          ),
+        );
 
-      final spec = await buildVideoExportSpec(
-        edit,
-        input.path,
-        source,
-        info.fps,
-      );
-      expect(spec, isNotNull);
-      expect(spec!.overlayPath, isNotNull);
-      expect(File(spec.overlayPath!).existsSync(), isTrue);
+        final spec = await buildVideoExportSpec(
+          edit,
+          input.path,
+          source,
+          info.fps,
+        );
+        expect(spec, isNotNull);
+        expect(spec!.overlayPath, isNotNull);
+        expect(File(spec.overlayPath!).existsSync(), isTrue);
 
-      final ok = await VideoTranscoder.export(spec);
-      expect(ok, isTrue);
+        final ok = await VideoTranscoder.export(spec);
+        expect(ok, isTrue);
 
-      final (width, height, duration, hasAudio) = await _describe(spec.output);
-      expect(width, spec.outWidth);
-      expect(height, spec.outHeight);
-      expect(width, 240);
-      expect(hasAudio, isFalse);
-      expect(duration, closeTo(2.0, 0.35));
-    }, timeout: const Timeout(Duration(minutes: 3)));
+        final (width, height, duration, hasAudio) = await _describe(
+          spec.output,
+        );
+        expect(width, spec.outWidth);
+        expect(height, spec.outHeight);
+        expect(width, 240);
+        expect(hasAudio, isFalse);
+        expect(duration, closeTo(2.0, 0.35));
+      },
+      timeout: const Timeout(Duration(minutes: 3)),
+    );
 
     test('поворачивает и отражает кадр', () async {
       if (!await _hasFfmpeg()) {

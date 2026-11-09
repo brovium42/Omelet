@@ -45,9 +45,7 @@ class StoriesModule {
 
   int _nowMs() => DateTime.now().millisecondsSinceEpoch;
 
-  int _normMs(int t) => t <= 0
-      ? 0
-      : (t < 1000000000000 ? t * 1000 : t);
+  int _normMs(int t) => t <= 0 ? 0 : (t < 1000000000000 ? t * 1000 : t);
 
   // ── Кэш (SQLite) ───────────────────────────────────────────────────────
 
@@ -196,9 +194,7 @@ class StoriesModule {
       final chunk = missing.sublist(i, end);
       try {
         final packet = await _api.sendRequest(Opcode.storiesGetByOwner, {
-          'owners': [
-            for (final id in chunk) StoryOwner(ownerId: id).toMap(),
-          ],
+          'owners': [for (final id in chunk) StoryOwner(ownerId: id).toMap()],
         }, silent: true);
         if (packet.isError) continue;
         if (_applyOwnerPayload(packet.payload, chunk)) changed = true;
@@ -230,7 +226,8 @@ class StoriesModule {
       }
     }
     for (final id in requested) {
-      if (!seen.contains(id) && _peerPreviews.remove(id) != null) changed = true;
+      if (!seen.contains(id) && _peerPreviews.remove(id) != null)
+        changed = true;
     }
     final rawPeers = data['peerStories'];
     if (rawPeers is List) {

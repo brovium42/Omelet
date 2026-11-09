@@ -10,8 +10,7 @@ class ArchivedChatsStore extends PerChatJsonStore<bool> {
 
   static final ArchivedChatsStore instance = ArchivedChatsStore._();
 
-  bool isArchived(int accountId, int chatId) =>
-      read(accountId, chatId) == true;
+  bool isArchived(int accountId, int chatId) => read(accountId, chatId) == true;
 
   Future<void> setArchived(int accountId, int chatId, bool archived) =>
       write(accountId, chatId, archived ? true : null);

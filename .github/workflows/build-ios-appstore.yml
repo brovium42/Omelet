@@ -10,8 +10,8 @@ on:
       - 'lib/**'
       - 'scripts/build_ios_share.sh'
       - 'scripts/sign_ios_appstore.py'
-      - 'native/komet_share/**'
-      - 'native/komet_tlottie/**'
+      - 'native/omelet_share/**'
+      - 'native/omelet_tlottie/**'
       - 'native/crypto-core'
       - 'native/crypto-core/**'
       - 'ios/**'
@@ -26,8 +26,8 @@ on:
       - 'lib/**'
       - 'scripts/build_ios_share.sh'
       - 'scripts/sign_ios_appstore.py'
-      - 'native/komet_share/**'
-      - 'native/komet_tlottie/**'
+      - 'native/omelet_share/**'
+      - 'native/omelet_tlottie/**'
       - 'native/crypto-core'
       - 'native/crypto-core/**'
       - 'ios/**'
@@ -97,15 +97,15 @@ jobs:
 
       - name: Build App Store variant (no codesign)
         env:
-          KOMET_APPSTORE_BUILD: 'true'
-          KOMET_REVIEW_PHONE: ${{ secrets.KOMET_REVIEW_PHONE }}
-          KOMET_REVIEW_PAYLOAD: ${{ secrets.KOMET_REVIEW_PAYLOAD }}
+          OMELET_APPSTORE_BUILD: 'true'
+          OMELET_REVIEW_PHONE: ${{ secrets.OMELET_REVIEW_PHONE }}
+          OMELET_REVIEW_PAYLOAD: ${{ secrets.OMELET_REVIEW_PAYLOAD }}
         run: |
           flutter config --no-enable-swift-package-manager
           flutter build ios --release --no-codesign -v \
             --dart-define=is_appstore_build=true \
-            --dart-define=KOMET_REVIEW_PHONE="$KOMET_REVIEW_PHONE" \
-            --dart-define=KOMET_REVIEW_PAYLOAD="$KOMET_REVIEW_PAYLOAD" \
+            --dart-define=OMELET_REVIEW_PHONE="$OMELET_REVIEW_PHONE" \
+            --dart-define=OMELET_REVIEW_PAYLOAD="$OMELET_REVIEW_PAYLOAD" \
             > ios-build.log 2>&1 || {
             tail -n 180 ios-build.log
             exit 1
@@ -123,14 +123,14 @@ jobs:
         run: |
           mkdir -p dist build/ios/Payload
           cp -R build/ios/iphoneos/Runner.app build/ios/Payload/
-          (cd build/ios && zip -qr ../../dist/Komet-ios-appstore-unsigned.ipa Payload)
+          (cd build/ios && zip -qr ../../dist/Omelet-ios-appstore-unsigned.ipa Payload)
           rm -rf build/ios/Payload
 
       - name: Upload unsigned IPA
         uses: actions/upload-artifact@v4
         with:
-          name: komet-ios-appstore-unsigned
-          path: dist/Komet-ios-appstore-unsigned.ipa
+          name: omelet-ios-appstore-unsigned
+          path: dist/Omelet-ios-appstore-unsigned.ipa
           if-no-files-found: error
           retention-days: 30
 
@@ -205,14 +205,14 @@ jobs:
         run: |
           mkdir -p dist build/ios/Payload
           cp -R build/ios/iphoneos/Runner.app build/ios/Payload/
-          (cd build/ios && zip -qr ../../dist/Komet-ios-appstore.ipa Payload)
+          (cd build/ios && zip -qr ../../dist/Omelet-ios-appstore.ipa Payload)
 
       - name: Upload signed IPA
         if: steps.signing.outputs.enabled == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: komet-ios-appstore
-          path: dist/Komet-ios-appstore.ipa
+          name: omelet-ios-appstore
+          path: dist/Omelet-ios-appstore.ipa
           if-no-files-found: error
           retention-days: 30
 

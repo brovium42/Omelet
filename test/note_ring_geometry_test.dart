@@ -2,7 +2,7 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:komet/frontend/widgets/attachment/bubbles/video_note_bubble.dart';
+import 'package:omelet/frontend/widgets/attachment/bubbles/video_note_bubble.dart';
 
 const _extent = 210.0;
 const _knob = 7.0;
@@ -115,9 +115,7 @@ void main() {
   });
 
   test('переход через 12 часов не перебрасывает позицию', () {
-    final before = _geometry.angleAt(
-      _geometry.center + const Offset(-4, -90),
-    );
+    final before = _geometry.angleAt(_geometry.center + const Offset(-4, -90));
     final after = _geometry.angleAt(_geometry.center + const Offset(4, -90));
     final delta = NoteRingGeometry.angleDelta(before, after);
 

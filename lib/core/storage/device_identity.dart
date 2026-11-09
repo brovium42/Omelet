@@ -31,5 +31,4 @@ abstract class DeviceIdentity {
     await prefs.setString(_deviceIdKey, generated);
     return generated;
   }
-
 }

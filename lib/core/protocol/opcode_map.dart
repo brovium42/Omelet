@@ -109,7 +109,8 @@ abstract class Opcode {
   static const int chatMembersUpdate = 77; // Обновление участников / добавление
   static const int videoChatStartActive = 78; // Инициация активного звонка
   static const int videoChatHistory = 79; // История звонков
-  static const int videoChatDeleteHistory = 164; // Удаление записей истории звонков
+  static const int videoChatDeleteHistory =
+      164; // Удаление записей истории звонков
   static const int videoChatCreateJoinLink = 84; // Ссылка для входа в видеочат
   static const int videoChatJoinByLink = 166; // Вход в звонок по ссылке
   static const int videoChatMembers = 195; // Участники видеочата
@@ -129,7 +130,8 @@ abstract class Opcode {
   // ── Comments (комментарии к постам каналов) ────────────────────────
   // Загрузка/отправка/набор комментариев переиспользуют chatHistory (49),
   // msgSend (64) и msgTyping (65) с добавленным полем postId.
-  static const int commentsInfo = 91; // Кол-во комментариев к постам (totalCount)
+  static const int commentsInfo =
+      91; // Кол-во комментариев к постам (totalCount)
 
   // ── Sessions ───────────────────────────────────────────────────────
   static const int sessionsInfo = 96; // Запрос активных сессий

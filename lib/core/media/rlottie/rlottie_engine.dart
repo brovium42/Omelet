@@ -180,14 +180,16 @@ class RlottieEngine {
     final clip = job.clip..complete = true;
     final raw = job.rawFrames;
     if (raw.length == clip.frameCount && !raw.contains(null)) {
-      unawaited(RlottieDiskCache.instance.store(
-        url: job.url,
-        px: clip.px,
-        frameCount: clip.frameCount,
-        frameRate: clip.frameRate,
-        durationMs: clip.durationMs,
-        frames: raw.cast<Uint8List>(),
-      ));
+      unawaited(
+        RlottieDiskCache.instance.store(
+          url: job.url,
+          px: clip.px,
+          frameCount: clip.frameCount,
+          frameRate: clip.frameRate,
+          durationMs: clip.durationMs,
+          frames: raw.cast<Uint8List>(),
+        ),
+      );
     }
     job.rawFrames = const [];
   }
@@ -235,7 +237,11 @@ class RlottieEngine {
   }
 
   Future<RlottieClip?> _load(
-      String url, int px, String key, String? inlineJson) async {
+    String url,
+    int px,
+    String key,
+    String? inlineJson,
+  ) async {
     if (inlineJson == null) {
       final disk = await RlottieDiskCache.instance.load(url, px);
       if (disk != null) {
@@ -260,13 +266,15 @@ class RlottieEngine {
     _jobs[jobId] = _Job(clip, url, completer);
 
     final port = await _worker();
-    port.send(RenderJob(
-      jobId: jobId,
-      json: json,
-      cacheKey: url,
-      px: px,
-      libPath: debugLibraryPath,
-    ));
+    port.send(
+      RenderJob(
+        jobId: jobId,
+        json: json,
+        cacheKey: url,
+        px: px,
+        libPath: debugLibraryPath,
+      ),
+    );
     return completer.future;
   }
 
@@ -288,7 +296,12 @@ class RlottieEngine {
   Future<ui.Image> _decode(Uint8List bgra, int px) {
     final completer = Completer<ui.Image>();
     ui.decodeImageFromPixels(
-        bgra, px, px, ui.PixelFormat.bgra8888, completer.complete);
+      bgra,
+      px,
+      px,
+      ui.PixelFormat.bgra8888,
+      completer.complete,
+    );
     return completer.future;
   }
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:komet/backend/modules/contacts.dart';
-import 'package:komet/frontend/screens/contacts/contact_sheet_common.dart';
-import 'package:komet/frontend/widgets/custom_notification.dart';
-import 'package:komet/frontend/widgets/komet_avatar.dart';
-import 'package:komet/l10n/app_localizations.dart';
-import 'package:komet/main.dart';
+import 'package:omelet/backend/modules/contacts.dart';
+import 'package:omelet/frontend/screens/contacts/contact_sheet_common.dart';
+import 'package:omelet/frontend/widgets/custom_notification.dart';
+import 'package:omelet/frontend/widgets/omelet_avatar.dart';
+import 'package:omelet/l10n/app_localizations.dart';
+import 'package:omelet/main.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import '../../../core/config/app_shape.dart';
 
@@ -194,7 +194,7 @@ class _EditContactCardState extends State<_EditContactCard> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Center(
-                    child: KometAvatar(
+                    child: OmeletAvatar(
                       name: avatarName,
                       size: 88,
                       imageUrl: widget.avatarUrl.isEmpty

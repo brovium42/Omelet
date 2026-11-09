@@ -27,7 +27,7 @@ import '../../widgets/sheet_helpers.dart';
 import '../../widgets/small_spinner.dart';
 import 'call_mic_sheet.dart';
 import 'call_participants_sheet.dart';
-import 'komet_hub.dart';
+import 'omelet_hub.dart';
 import '../../../core/config/app_fonts.dart';
 
 class CallScreen extends StatefulWidget {
@@ -57,7 +57,7 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
   StreamSubscription<CallSessionState>? _stateSub;
   StreamSubscription<void>? _canceledSub;
   StreamSubscription<void>? _infoSub;
-  StreamSubscription<void>? _kometSub;
+  StreamSubscription<void>? _omeletSub;
   StreamSubscription<CallChatMessage>? _chatSub;
   StreamSubscription<MediaStream>? _remoteStreamSub;
   bool _chatOpen = false;
@@ -252,10 +252,10 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
     });
     _remoteStreamSub = session.remoteStreamStream.listen(_attachStream);
     _tileStreamSub = session.participantStreamUpdates.listen(_onTileStream);
-    _kometSub = session.peerKometDetected.listen((_) => _showKometBadge());
+    _omeletSub = session.peerOmeletDetected.listen((_) => _showOmeletBadge());
     _chatSub = session.chatMessages.listen(_onChatMessage);
-    if (session.peerIsKomet) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => _showKometBadge());
+    if (session.peerIsOmelet) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _showOmeletBadge());
     }
     final existing = session.remoteStream;
     if (existing != null) _attachStream(existing);
@@ -276,10 +276,10 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
     );
   }
 
-  void _showKometBadge() {
+  void _showOmeletBadge() {
     if (!mounted) return;
     final l10n = AppLocalizations.of(context)!;
-    showCustomNotification(context, l10n.callKometDetectedNotification);
+    showCustomNotification(context, l10n.callOmeletDetectedNotification);
   }
 
   void _onChatMessage(CallChatMessage message) {
@@ -287,11 +287,15 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
     showCustomNotification(context, message.text);
   }
 
-  Future<void> _openKometHub() async {
+  Future<void> _openOmeletHub() async {
     final session = _session;
     if (session == null) return;
     setState(() => _chatOpen = true);
-    await showKometHub(context, session: session, scheme: _darkScheme(context));
+    await showOmeletHub(
+      context,
+      session: session,
+      scheme: _darkScheme(context),
+    );
     if (mounted) setState(() => _chatOpen = false);
   }
 
@@ -428,7 +432,7 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
     _stateSub?.cancel();
     _canceledSub?.cancel();
     _infoSub?.cancel();
-    _kometSub?.cancel();
+    _omeletSub?.cancel();
     _chatSub?.cancel();
     _remoteStreamSub?.cancel();
     _tileStreamSub?.cancel();
@@ -1010,10 +1014,10 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  if (_session?.peerIsKomet == true)
+                  if (_session?.peerIsOmelet == true)
                     IconButton(
-                      onPressed: _openKometHub,
-                      tooltip: l10n.callTooltipKometHub,
+                      onPressed: _openOmeletHub,
+                      tooltip: l10n.callTooltipOmeletHub,
                       icon: Icon(
                         Symbols.auto_awesome,
                         color: cs.primary,

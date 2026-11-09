@@ -91,7 +91,9 @@ class WebAppModule {
       throw const WebAppUnavailable('Нет соединения с сервером');
     }
     final normalizedStartParam =
-        (startParam != null && startParam.trim().isNotEmpty) ? startParam : null;
+        (startParam != null && startParam.trim().isNotEmpty)
+        ? startParam
+        : null;
     final packet = await _api.sendRequest(Opcode.webAppInitData, {
       'botId': botId,
       'startParam': ?normalizedStartParam,

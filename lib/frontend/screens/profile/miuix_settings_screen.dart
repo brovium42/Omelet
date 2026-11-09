@@ -274,7 +274,7 @@ class _MiuixPreview extends StatelessWidget {
                       Icon(Symbols.arrow_back, color: cs.onSurface, size: 22),
                       const SizedBox(width: 16),
                       Text(
-                        'Komet',
+                        'Omelet',
                         style: TextStyle(
                           color: cs.onSurface,
                           fontSize: 20,

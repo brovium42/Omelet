@@ -1,4 +1,4 @@
-name: komet
+name: omelet
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 0.5.19+19
+version: 1.0.0+1
 
 environment:
   sdk: ^3.10.4
@@ -41,7 +41,7 @@ dependencies:
 
   # Rust message-encryption core — Argon2id + ChaCha20-Poly1305, output encoded
   # as lowercase Cyrillic base32. Separate from kolibri: that is vendored
-  # transport, this is Komet's own crypto.
+  # transport, this is Omelet's own crypto.
   komet_crypto:
     path: native/komet_crypto
 

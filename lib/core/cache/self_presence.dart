@@ -4,8 +4,7 @@ class SelfPresence {
   static final ValueNotifier<bool> isOnline = ValueNotifier(true);
   static final ValueNotifier<int?> lastSeenSeconds = ValueNotifier(null);
 
-  static int get _nowSeconds =>
-      DateTime.now().millisecondsSinceEpoch ~/ 1000;
+  static int get _nowSeconds => DateTime.now().millisecondsSinceEpoch ~/ 1000;
 
   static void markOnline() {
     isOnline.value = true;

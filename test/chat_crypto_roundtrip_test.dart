@@ -14,9 +14,7 @@ void main() {
   }
 
   setUpAll(() async {
-    await kc.RustLib.init(
-      externalLibrary: ExternalLibrary.open(_libPath),
-    );
+    await kc.RustLib.init(externalLibrary: ExternalLibrary.open(_libPath));
   });
 
   test('round-trips through the native bridge', () async {
@@ -74,19 +72,132 @@ void main() {
 }
 
 const List<int> _tinyPng = [
-  137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 4, 0,
-  0, 0, 4, 8, 2, 0, 0, 0, 38, 147, 9, 41, 0, 0, 0, 63, 73, 68, 65, 84, 120,
-  156, 1, 52, 0, 203, 255, 0, 0, 40, 80, 120, 160, 200, 240, 24, 64, 104, 144,
-  184, 0, 17, 57, 97, 137, 177, 217, 1, 41, 81, 121, 161, 201, 0, 34, 74, 114,
-  154, 194, 234, 18, 58, 98, 138, 178, 218, 0, 51, 91, 131, 171, 211, 251, 35,
-  75, 115, 155, 195, 235, 36, 246, 23, 9, 123, 15, 58, 142, 0, 0, 0, 0, 73, 69,
-  78, 68, 174, 66, 96, 130,
+  137,
+  80,
+  78,
+  71,
+  13,
+  10,
+  26,
+  10,
+  0,
+  0,
+  0,
+  13,
+  73,
+  72,
+  68,
+  82,
+  0,
+  0,
+  0,
+  4,
+  0,
+  0,
+  0,
+  4,
+  8,
+  2,
+  0,
+  0,
+  0,
+  38,
+  147,
+  9,
+  41,
+  0,
+  0,
+  0,
+  63,
+  73,
+  68,
+  65,
+  84,
+  120,
+  156,
+  1,
+  52,
+  0,
+  203,
+  255,
+  0,
+  0,
+  40,
+  80,
+  120,
+  160,
+  200,
+  240,
+  24,
+  64,
+  104,
+  144,
+  184,
+  0,
+  17,
+  57,
+  97,
+  137,
+  177,
+  217,
+  1,
+  41,
+  81,
+  121,
+  161,
+  201,
+  0,
+  34,
+  74,
+  114,
+  154,
+  194,
+  234,
+  18,
+  58,
+  98,
+  138,
+  178,
+  218,
+  0,
+  51,
+  91,
+  131,
+  171,
+  211,
+  251,
+  35,
+  75,
+  115,
+  155,
+  195,
+  235,
+  36,
+  246,
+  23,
+  9,
+  123,
+  15,
+  58,
+  142,
+  0,
+  0,
+  0,
+  0,
+  73,
+  69,
+  78,
+  68,
+  174,
+  66,
+  96,
+  130,
 ];
 
 void _imageTests() {
   late Directory tmp;
 
-  setUp(() => tmp = Directory.systemTemp.createTempSync('komet_img'));
+  setUp(() => tmp = Directory.systemTemp.createTempSync('omelet_img'));
   tearDown(() => tmp.deleteSync(recursive: true));
 
   File writePlain() =>
@@ -98,11 +209,7 @@ void _imageTests() {
     final enc = '${tmp.path}/enc.png';
     final out = '${tmp.path}/out.png';
 
-    await kc.encryptImageFile(
-      sourcePath: plain.path,
-      destPath: enc,
-      key: key,
-    );
+    await kc.encryptImageFile(sourcePath: plain.path, destPath: enc, key: key);
 
     final encBytes = File(enc).readAsBytesSync();
     expect(encBytes.sublist(1, 4), 'PNG'.codeUnits);

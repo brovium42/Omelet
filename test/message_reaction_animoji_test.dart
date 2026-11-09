@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:komet/backend/modules/messages.dart';
-import 'package:komet/frontend/widgets/lottie_image.dart';
-import 'package:komet/frontend/widgets/message_bubble.dart';
-import 'package:komet/l10n/app_localizations.dart';
-import 'package:komet/models/animoji.dart';
+import 'package:omelet/backend/modules/messages.dart';
+import 'package:omelet/frontend/widgets/lottie_image.dart';
+import 'package:omelet/frontend/widgets/message_bubble.dart';
+import 'package:omelet/l10n/app_localizations.dart';
+import 'package:omelet/models/animoji.dart';
 
 const _reaction = '🔥';
 const _messageId = 'synthetic-message';
@@ -105,8 +105,7 @@ void main() {
     expect(effect.repeat, isFalse);
     final effectFinder = find.byWidgetPredicate(
       (widget) =>
-          widget is LottieImage &&
-          widget.lottieUrl == animoji.lottiePlayUrl,
+          widget is LottieImage && widget.lottieUrl == animoji.lottiePlayUrl,
     );
     expect(tester.getSize(effectFinder), const Size.square(36));
     final players = tester

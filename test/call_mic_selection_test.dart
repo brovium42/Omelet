@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:komet/core/calls/audio_devices.dart';
-import 'package:komet/core/calls/pulse_audio.dart';
-import 'package:komet/core/config/call_no_mute.dart';
+import 'package:omelet/core/calls/audio_devices.dart';
+import 'package:omelet/core/calls/pulse_audio.dart';
+import 'package:omelet/core/config/call_no_mute.dart';
 
 const _deviceId = 'mic-test-0';
 
@@ -27,8 +27,8 @@ const _sourcesJson = '''
     "properties": {}
   },
   {
-    "name": "komet_capture_4242",
-    "description": "komet_capture_4242",
+    "name": "omelet_capture_4242",
+    "description": "omelet_capture_4242",
     "monitor_source": "",
     "properties": {}
   }

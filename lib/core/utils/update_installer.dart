@@ -57,7 +57,9 @@ abstract class UpdateInstaller {
     if (!Platform.isAndroid || info.assets.isEmpty) return null;
 
     final packageInfo = await PackageInfo.fromPlatform();
-    final flavor = packageInfo.packageName == 'ru.oneme.app' ? 'oneme' : 'komet';
+    final flavor = packageInfo.packageName == 'ru.oneme.app'
+        ? 'oneme'
+        : 'omelet';
 
     final androidInfo = await DeviceInfoPlugin().androidInfo;
     final abis = androidInfo.supportedAbis;
@@ -83,7 +85,7 @@ abstract class UpdateInstaller {
   ) async {
     final dir = await getTemporaryDirectory();
     final safeTag = tag.replaceAll(RegExp(r'[^A-Za-z0-9._-]'), '_');
-    final file = File('${dir.path}/komet-update-$safeTag.apk');
+    final file = File('${dir.path}/omelet-update-$safeTag.apk');
     final part = File('${file.path}.part');
 
     final client = HttpClient();

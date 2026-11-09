@@ -17,7 +17,7 @@ if (hasReleaseSigning) {
 }
 
 android {
-    namespace = "ru.komet.app"
+    namespace = "ru.omelet.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -32,7 +32,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "ru.komet.app"
+        applicationId = "ru.omelet.app"
         minSdk = maxOf(flutter.minSdkVersion, 23)
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -54,10 +54,10 @@ android {
     flavorDimensions += "distribution"
 
     productFlavors {
-        create("komet") {
+        create("omelet") {
             dimension = "distribution"
             isDefault = true
-            applicationId = "ru.komet.app"
+            applicationId = "ru.omelet.app"
         }
         create("oneme") {
             dimension = "distribution"

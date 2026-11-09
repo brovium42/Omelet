@@ -88,7 +88,7 @@ class DeepLinkService {
   }
 
   void _flushPending() {
-    final context = KometApp.navigatorKey.currentContext;
+    final context = OmeletApp.navigatorKey.currentContext;
 
     if (_pendingLogExport) {
       if (context == null) {

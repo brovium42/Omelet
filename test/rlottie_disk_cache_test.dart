@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:komet/core/media/rlottie/rlottie_disk_cache.dart';
+import 'package:omelet/core/media/rlottie/rlottie_disk_cache.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -48,12 +48,17 @@ void main() {
     expect(loaded.frameRate, 30);
     expect(loaded.durationMs, 166);
     for (var f = 0; f < frameCount; f++) {
-      expect(loaded.frames[f], orderedEquals(frames[f]),
-          reason: 'frame $f bytes preserved');
+      expect(
+        loaded.frames[f],
+        orderedEquals(frames[f]),
+        reason: 'frame $f bytes preserved',
+      );
     }
 
-    expect(await RlottieDiskCache.instance.load('https://other/x.json', px),
-        isNull);
+    expect(
+      await RlottieDiskCache.instance.load('https://other/x.json', px),
+      isNull,
+    );
 
     tmp.deleteSync(recursive: true);
   });

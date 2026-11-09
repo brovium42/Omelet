@@ -91,9 +91,9 @@ class _NotificationsScreenState extends State<NotificationsScreen>
   }
 
   void _openWebPush() {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => const WebPushScreen()),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const WebPushScreen()));
   }
 
   Future<void> _onFkmChanged(bool value) async {

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:komet/backend/modules/chat_parsing.dart';
-import 'package:komet/backend/modules/chats.dart';
+import 'package:omelet/backend/modules/chat_parsing.dart';
+import 'package:omelet/backend/modules/chats.dart';
 
 const int _me = 4242;
 const int _peer = 7331;
@@ -14,23 +14,20 @@ const int _mentionId = 111411200327680777;
 const int _lastMsgId = 111411200655360012;
 const int _oldMentionId = 111411196067840005;
 
-CachedChat _chat({
-  int? mentionId,
-  int readMark = _readMark,
-  int unread = 2,
-}) => CachedChat(
-  id: _chatId,
-  accountId: _me,
-  type: 'CHAT',
-  unreadCount: unread,
-  lastEventTime: _lastMsgTime,
-  cachedAt: 0,
-  dontDisturbUntil: 0,
-  isOnline: false,
-  seenTime: 0,
-  participants: {_me: readMark, _peer: _lastMsgTime},
-  lastMentionMsgId: mentionId,
-);
+CachedChat _chat({int? mentionId, int readMark = _readMark, int unread = 2}) =>
+    CachedChat(
+      id: _chatId,
+      accountId: _me,
+      type: 'CHAT',
+      unreadCount: unread,
+      lastEventTime: _lastMsgTime,
+      cachedAt: 0,
+      dontDisturbUntil: 0,
+      isOnline: false,
+      seenTime: 0,
+      participants: {_me: readMark, _peer: _lastMsgTime},
+      lastMentionMsgId: mentionId,
+    );
 
 void main() {
   group('message id', () {

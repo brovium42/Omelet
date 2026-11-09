@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:komet/core/media/ogg_page_writer.dart';
-import 'package:komet/core/media/opus_ogg_index.dart';
+import 'package:omelet/core/media/ogg_page_writer.dart';
+import 'package:omelet/core/media/opus_ogg_index.dart';
 
 const int _sampleRate = 48000;
 const int _packetSamples = 960;
@@ -29,7 +29,7 @@ Uint8List _opusHead() {
 }
 
 Uint8List _opusTags() {
-  const vendor = 'komet-test';
+  const vendor = 'omelet-test';
   final out = BytesBuilder()
     ..add('OpusTags'.codeUnits)
     ..add(_le32(vendor.length))
@@ -73,9 +73,7 @@ Uint8List _buildStream(int packetCount, {int endTrim = 0}) {
   for (var start = 0; start < packetCount; start += _packetsPerPage) {
     final end = (start + _packetsPerPage).clamp(0, packetCount);
     final last = end == packetCount;
-    final packets = [
-      for (var i = start; i < end; i++) _audioPacket(i),
-    ];
+    final packets = [for (var i = start; i < end; i++) _audioPacket(i)];
     pages.add(
       OggPageWriter.page(
         headerType: last ? OggPageWriter.endOfStream : 0,
@@ -191,10 +189,7 @@ void main() {
 
   test('не разбирает мусор', () {
     expect(OpusOggIndex.parse(Uint8List(0)), isNull);
-    expect(
-      OpusOggIndex.parse(Uint8List.fromList(List.filled(512, 7))),
-      isNull,
-    );
+    expect(OpusOggIndex.parse(Uint8List.fromList(List.filled(512, 7))), isNull);
   });
 
   test('срез укорачивает поток ровно на запрошенную позицию', () {

@@ -2,10 +2,10 @@ import Flutter
 import UIKit
 import UserNotifications
 
-final class KometNotifications: NSObject {
-  static let shared = KometNotifications()
+final class OmeletNotifications: NSObject {
+  static let shared = OmeletNotifications()
 
-  private static let chatKeys = ["komet_chat", "chatId", "chat_id"]
+  private static let chatKeys = ["omelet_chat", "chatId", "chat_id"]
 
   private var sink: FlutterEventSink?
   private var pendingChatId: Int64 = 0
@@ -76,7 +76,7 @@ final class KometNotifications: NSObject {
   }
 }
 
-extension KometNotifications: UNUserNotificationCenterDelegate {
+extension OmeletNotifications: UNUserNotificationCenterDelegate {
   func userNotificationCenter(
     _ center: UNUserNotificationCenter,
     willPresent notification: UNNotification,

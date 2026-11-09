@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:komet/core/links/max_link.dart';
-import 'package:komet/core/utils/link_opener.dart';
+import 'package:omelet/core/links/max_link.dart';
+import 'package:omelet/core/utils/link_opener.dart';
 
 void main() {
   group('leavesWebView', () {
@@ -18,7 +18,14 @@ void main() {
     });
 
     test('hands app schemes over to the app', () {
-      for (final scheme in ['max', 'MAX', 'komet', 'tel', 'mailto', 'intent']) {
+      for (final scheme in [
+        'max',
+        'MAX',
+        'omelet',
+        'tel',
+        'mailto',
+        'intent',
+      ]) {
         expect(leavesWebView(scheme), isTrue, reason: scheme);
       }
     });
