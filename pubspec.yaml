@@ -117,20 +117,20 @@ dev_dependencies:
   plugin_platform_interface: ^2.1.0
 
 flutter_launcher_icons:
-  image_path: "assets/komet_icon.png"
+  image_path: "assets/omelet_icon.png"
   android: "ic_launcher"
   ios: true
   remove_alpha_ios: true
   background_color_ios: "#000000"
   adaptive_icon_background: "#000000"
-  adaptive_icon_foreground: "assets/komet.png"
+  adaptive_icon_foreground: "assets/omelet.png"
   windows:
     generate: true
-    image_path: "assets/komet_icon.png"
+    image_path: "assets/omelet_icon.png"
     icon_size: 256
   macos:
     generate: true
-    image_path: "assets/komet_icon.png"
+    image_path: "assets/omelet_icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -147,9 +147,10 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/komet.png
-    - assets/komet_icon.png
-    - assets/meteor_icon.png
+    - assets/omelet.png
+    - assets/omelet_icon.png
+    - assets/omelet_minimal_icon.png
+    - assets/omelet_mono.png
     - assets/emoji_keywords.json
     - assets/lottie/
     - assets/wallpapers/patterns/

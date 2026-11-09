@@ -5,24 +5,38 @@ import 'package:flutter/rendering.dart';
 
 import '../../core/config/app_frost.dart';
 import '../../core/config/app_liquid_glass.dart';
+import '../../core/config/app_miuix.dart';
 import '../../core/config/app_visual_style.dart';
+import 'miuix/miuix_surfaces.dart';
 
 class LiquidGlass {
   static const String _asset = 'shaders/liquid_glass.frag';
 
   static ui.FragmentProgram? _program;
-  static bool _loadAttempted = false;
+  static Future<void>? _loading;
 
-  static bool get isSupported => _program != null;
+  static bool get isSupported => AppLiquidGlass.enabled && hasShader;
+
+  static bool get hasShader => _program != null;
+
+  static bool get shaderFiltersSupported =>
+      ui.ImageFilter.isShaderFilterSupported;
+
+  static bool get available => isSupported || AppMiuix.glassActive;
 
   static bool get active =>
       isSupported && AppVisualStyle.current.value == VisualStyle.liquidGlass;
 
   static Future<void> load() async {
-    if (_loadAttempted) return;
-    _loadAttempted = true;
-    if (!AppLiquidGlass.enabled) return;
-    if (!ui.ImageFilter.isShaderFilterSupported) return;
+    if (AppLiquidGlass.enabled || AppMiuix.glassRefraction.current.value > 0) {
+      await ensureShader();
+    }
+  }
+
+  static Future<void> ensureShader() => _loading ??= _loadProgram();
+
+  static Future<void> _loadProgram() async {
+    if (!shaderFiltersSupported) return;
     try {
       _program = await ui.FragmentProgram.fromAsset(_asset);
     } catch (_) {
@@ -35,7 +49,7 @@ class GlassSurface extends StatelessWidget {
   final bool liquid;
   final BorderRadius borderRadius;
   final Color frostTint;
-  final double frostSigma;
+  final double? frostSigma;
   final Color liquidTint;
   final BoxBorder? border;
   final BackdropKey? backdropKey;
@@ -46,7 +60,7 @@ class GlassSurface extends StatelessWidget {
     this.liquid = false,
     this.borderRadius = BorderRadius.zero,
     required this.frostTint,
-    this.frostSigma = AppFrost.sigma,
+    this.frostSigma,
     this.liquidTint = Colors.transparent,
     this.border,
     this.backdropKey,
@@ -55,6 +69,7 @@ class GlassSurface extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (AppMiuix.active) return _miuix();
     final glass = liquid && LiquidGlass.isSupported;
     final decorated = DecoratedBox(
       decoration: BoxDecoration(
@@ -70,13 +85,77 @@ class GlassSurface extends StatelessWidget {
         child: decorated,
       );
     }
+    final sigma = frostSigma ?? AppFrost.sigma;
     return ClipRRect(
       borderRadius: borderRadius,
       child: BackdropFilter(
-        filter: ui.ImageFilter.blur(sigmaX: frostSigma, sigmaY: frostSigma),
+        filter: ui.ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
         backdropGroupKey: backdropKey,
         child: decorated,
       ),
+    );
+  }
+
+  Widget _miuix() {
+    final decorated = DecoratedBox(
+      decoration: BoxDecoration(border: border),
+      child: child,
+    );
+    if (liquid && AppMiuix.glassEnabled.current.value) {
+      return MiuixGlassSurface(
+        borderRadius: borderRadius,
+        tint: liquidTint,
+        shadow: false,
+        child: decorated,
+      );
+    }
+    return MiuixBlurSurface(
+      borderRadius: borderRadius,
+      tint: frostTint,
+      backdropKey: backdropKey,
+      child: decorated,
+    );
+  }
+}
+
+class LiquidGlassRefraction extends StatelessWidget {
+  final BorderRadius borderRadius;
+  final Color tint;
+  final double blurSigma;
+  final double refraction;
+  final double specular;
+  final double chroma;
+  final double rimWidth;
+  final Widget child;
+
+  const LiquidGlassRefraction({
+    super.key,
+    required this.borderRadius,
+    required this.tint,
+    required this.blurSigma,
+    required this.refraction,
+    required this.specular,
+    this.chroma = AppLiquidGlass.chroma,
+    this.rimWidth = AppLiquidGlass.rimWidth,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (!LiquidGlass.hasShader) return child;
+    return _LiquidGlassBackdrop(
+      borderRadius: borderRadius,
+      tint: tint,
+      blurSigma: blurSigma,
+      spread: AppLiquidGlass.spread,
+      refraction: refraction,
+      chroma: chroma,
+      specular: specular,
+      light: AppLiquidGlass.light,
+      tintFeather: AppLiquidGlass.tintFeather,
+      rimWidth: rimWidth,
+      devicePixelRatio: MediaQuery.devicePixelRatioOf(context),
+      child: child,
     );
   }
 }
@@ -111,6 +190,14 @@ class LiquidGlassSurface extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (AppMiuix.glassActive) {
+      return MiuixGlassSurface(
+        borderRadius: borderRadius,
+        tint: tint,
+        shadow: false,
+        child: child,
+      );
+    }
     if (!LiquidGlass.isSupported) return child;
     return _LiquidGlassBackdrop(
       borderRadius: borderRadius,

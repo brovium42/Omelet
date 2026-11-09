@@ -8,14 +8,14 @@ enum AppIcon {
   defaultIcon(
     'default',
     'Default',
-    'assets/komet_icon.png',
+    'assets/omelet_icon.png',
     'MainActivity',
     null,
   ),
   minimal(
     'minimal',
     'Minimal',
-    'assets/meteor_icon.png',
+    'assets/omelet_minimal_icon.png',
     'MinimalIcon',
     'MinimalIcon',
   );

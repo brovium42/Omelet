@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 
 import '../../core/config/app_frost.dart';
 import '../../core/config/app_liquid_glass.dart';
+import '../../core/config/app_miuix.dart';
 import '../../core/config/app_nav_pill_style.dart';
 import '../../core/config/app_pill_gradient.dart';
 import '../../core/config/app_visual_style.dart';
 import 'animated_lottie_icon.dart';
 import 'glossy_pill.dart';
 import 'liquid_glass.dart';
+import 'miuix/miuix_surfaces.dart';
 
 class PillNavItem {
   final IconData icon;
@@ -90,7 +92,7 @@ class SlidingPillNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<VisualStyle>(
-      valueListenable: AppVisualStyle.current,
+      valueListenable: AppMiuix.visualStyle,
       builder: (context, style, _) {
         if (style == VisualStyle.materialYou) {
           return _buildNav(
@@ -99,6 +101,19 @@ class SlidingPillNav extends StatelessWidget {
             gradient: false,
             frost: false,
             liquid: false,
+          );
+        }
+        if (style == VisualStyle.miuix) {
+          return ValueListenableBuilder<NavPillStyle>(
+            valueListenable: AppNavPillStyle.current,
+            builder: (context, navStyle, _) => _buildNav(
+              context,
+              glossy: false,
+              gradient: false,
+              frost: NavPillMaterial.isFrost(navStyle),
+              liquid: NavPillMaterial.isLiquid(navStyle),
+              miuix: true,
+            ),
           );
         }
         return ValueListenableBuilder<bool>(
@@ -125,6 +140,7 @@ class SlidingPillNav extends StatelessWidget {
     required bool gradient,
     required bool frost,
     required bool liquid,
+    bool miuix = false,
   }) {
     final cs = Theme.of(context).colorScheme;
     final visualSel = position.round().clamp(0, items.length - 1);
@@ -135,28 +151,21 @@ class SlidingPillNav extends StatelessWidget {
               (frost ? AppFrost.glassTint(cs) : cs.surfaceContainerHigh));
     final useGradient = glossy && gradient && !liquid;
     final frosted = frost && !liquid && base.a < 1;
+    const radius = BorderRadius.all(Radius.circular(34));
 
     return Container(
       height: height,
       padding: const EdgeInsets.symmetric(horizontal: 2),
-      decoration: BoxDecoration(
-        color: useGradient || liquid ? null : base,
+      decoration: ShapeDecoration(
+        color: useGradient || liquid || (miuix && frosted) ? null : base,
         gradient: useGradient ? GlossyDecor.fillGradient(base) : null,
-        borderRadius: BorderRadius.circular(34),
-        border: glossy
-            ? GlossyDecor.rimBorder(base)
-            : (borderColor != null
-                  ? Border.all(color: borderColor!, width: 0.5)
-                  : null),
-        boxShadow: frosted
-            ? null
-            : [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: liquid ? 0.28 : 0.5),
-                  blurRadius: liquid ? 26 : 20,
-                  offset: const Offset(0, 10),
-                ),
-              ],
+        shape: _outline(radius, glossy: glossy, base: base, miuix: miuix),
+        shadows: _shadows(
+          context,
+          frosted: frosted,
+          liquid: liquid,
+          miuix: miuix,
+        ),
       ),
       child: Stack(
         clipBehavior: Clip.hardEdge,
@@ -164,17 +173,25 @@ class SlidingPillNav extends StatelessWidget {
           if (liquid)
             Positioned.fill(
               child: IgnorePointer(
-                child: LiquidGlassSurface(
-                  borderRadius: BorderRadius.circular(34),
+                child: LiquidGlassSurface(borderRadius: radius, tint: base),
+              ),
+            ),
+          if (frosted && miuix)
+            Positioned.fill(
+              child: IgnorePointer(
+                child: MiuixBlurSurface(
+                  borderRadius: radius,
                   tint: base,
+                  backdropKey: backdropKey,
+                  child: const SizedBox.expand(),
                 ),
               ),
             ),
-          if (frosted)
+          if (frosted && !miuix)
             Positioned.fill(
               child: IgnorePointer(
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(34),
+                  borderRadius: radius,
                   child: BackdropFilter(
                     filter: ui.ImageFilter.blur(
                       sigmaX: AppFrost.sigma,
@@ -245,6 +262,44 @@ class SlidingPillNav extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  ShapeBorder _outline(
+    BorderRadius radius, {
+    required bool glossy,
+    required Color base,
+    required bool miuix,
+  }) {
+    final BorderSide side;
+    if (glossy) {
+      side = GlossyDecor.rimBorder(base).top;
+    } else if (borderColor != null && !miuix) {
+      side = BorderSide(color: borderColor!, width: 0.5);
+    } else {
+      side = BorderSide.none;
+    }
+    if (miuix) return MiuixShape.border(radius, side: side);
+    return RoundedRectangleBorder(borderRadius: radius, side: side);
+  }
+
+  List<BoxShadow>? _shadows(
+    BuildContext context, {
+    required bool frosted,
+    required bool liquid,
+    required bool miuix,
+  }) {
+    if (miuix) {
+      if (frosted) return null;
+      return MiuixGlassSurface.shadows(Theme.of(context).brightness);
+    }
+    if (frosted) return null;
+    return [
+      BoxShadow(
+        color: Colors.black.withValues(alpha: liquid ? 0.28 : 0.5),
+        blurRadius: liquid ? 26 : 20,
+        offset: const Offset(0, 10),
+      ),
+    ];
   }
 }
 

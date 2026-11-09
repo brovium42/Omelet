@@ -144,14 +144,14 @@ class _UnreadSeparatorItem {
 class _FrostedPanel extends StatelessWidget {
   final Color tint;
   final Border? border;
-  final double sigma;
+  final double? sigma;
   final BackdropKey? backdropKey;
   final Widget child;
 
   const _FrostedPanel({
     required this.tint,
     this.border,
-    this.sigma = AppFrost.panelSigma,
+    this.sigma,
     this.backdropKey,
     required this.child,
   });
@@ -165,7 +165,7 @@ class _FrostedPanel extends StatelessWidget {
         Positioned.fill(
           child: GlassSurface(
             frostTint: tint,
-            frostSigma: sigma,
+            frostSigma: sigma ?? AppFrost.panelSigma,
             border: border,
             backdropKey: backdropKey,
             child: const SizedBox.expand(),

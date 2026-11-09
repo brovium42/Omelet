@@ -101,7 +101,7 @@ abstract class AppLocalizations {
   /// No description provided for @loginTitle.
   ///
   /// In en, this message translates to:
-  /// **'Sign in to Komet'**
+  /// **'Sign in to Omelet'**
   String get loginTitle;
 
   /// No description provided for @loginSubtitle.
@@ -1595,7 +1595,7 @@ abstract class AppLocalizations {
   /// No description provided for @devicesPromoTitle.
   ///
   /// In en, this message translates to:
-  /// **'Devices in KOMET'**
+  /// **'Devices in Omelet'**
   String get devicesPromoTitle;
 
   /// No description provided for @devicesPromoSubtitle.
@@ -2081,7 +2081,7 @@ abstract class AppLocalizations {
   /// No description provided for @callTooltipKometHub.
   ///
   /// In en, this message translates to:
-  /// **'Komet'**
+  /// **'Omelet'**
   String get callTooltipKometHub;
 
   /// No description provided for @callInfoTitle.
@@ -2429,7 +2429,7 @@ abstract class AppLocalizations {
   /// No description provided for @hubTitleMenu.
   ///
   /// In en, this message translates to:
-  /// **'Komet'**
+  /// **'Omelet'**
   String get hubTitleMenu;
 
   /// No description provided for @hubChatPageTitle.
@@ -5219,7 +5219,7 @@ abstract class AppLocalizations {
   /// No description provided for @webPushIntro.
   ///
   /// In en, this message translates to:
-  /// **'Komet has no ordinary push on iOS: Apple issues a notification token only to apps signed with a developer certificate, and a sideloaded build never gets one.\n\nThe way around it is a web app on the Home Screen. MAX\'s own server sends the notifications through Apple, and a separate icon displays them.\n\nThat needs a web session. Komet creates one and approves it itself, from this very device — no phone number or code required.'**
+  /// **'Omelet has no ordinary push on iOS: Apple issues a notification token only to apps signed with a developer certificate, and a sideloaded build never gets one.\n\nThe way around it is a web app on the Home Screen. MAX\'s own server sends the notifications through Apple, and a separate icon displays them.\n\nThat needs a web session. Omelet creates one and approves it itself, from this very device — no phone number or code required.'**
   String get webPushIntro;
 
   /// No description provided for @webPushConfirm.
@@ -5309,7 +5309,7 @@ abstract class AppLocalizations {
   /// No description provided for @webPushWaitingBody.
   ///
   /// In en, this message translates to:
-  /// **'Komet is approving the web session from this device. This usually takes a few seconds.'**
+  /// **'Omelet is approving the web session from this device. This usually takes a few seconds.'**
   String get webPushWaitingBody;
 
   /// No description provided for @webPushNeedsOnline.
@@ -5353,6 +5353,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Device'**
   String get webPushStatusDevice;
+
+  /// No description provided for @appearanceVisualStyleMiuix.
+  ///
+  /// In en, this message translates to:
+  /// **'Miuix'**
+  String get appearanceVisualStyleMiuix;
+
+  /// No description provided for @appearanceMiuixSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Miuix settings'**
+  String get appearanceMiuixSettings;
+
+  /// No description provided for @miuixSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Miuix theme'**
+  String get miuixSettingsTitle;
+
+  /// No description provided for @miuixEnableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Miuix theme'**
+  String get miuixEnableTitle;
+
+  /// No description provided for @miuixEnableSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'HyperOS design: colors, shapes and controls from the miuix library'**
+  String get miuixEnableSubtitle;
+
+  /// No description provided for @miuixInactiveHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes apply once the Miuix theme is on'**
+  String get miuixInactiveHint;
+
+  /// No description provided for @miuixPreviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get miuixPreviewTitle;
+
+  /// No description provided for @miuixSectionAppearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get miuixSectionAppearance;
+
+  /// No description provided for @miuixMonetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Monet colors'**
+  String get miuixMonetTitle;
+
+  /// No description provided for @miuixMonetSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the app accent color instead of HyperOS blue'**
+  String get miuixMonetSubtitle;
+
+  /// No description provided for @miuixSmoothCornersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Smooth corners'**
+  String get miuixSmoothCornersTitle;
+
+  /// No description provided for @miuixSmoothCornersSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continuous squircle corners, like in HyperOS'**
+  String get miuixSmoothCornersSubtitle;
+
+  /// No description provided for @miuixSectionBlur.
+  ///
+  /// In en, this message translates to:
+  /// **'Blur'**
+  String get miuixSectionBlur;
+
+  /// No description provided for @miuixBlurTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Texture blur'**
+  String get miuixBlurTitle;
+
+  /// No description provided for @miuixBlurSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Blur under the navigation bar, chat header and composer'**
+  String get miuixBlurSubtitle;
+
+  /// No description provided for @miuixBlurRadius.
+  ///
+  /// In en, this message translates to:
+  /// **'Blur radius'**
+  String get miuixBlurRadius;
+
+  /// No description provided for @miuixBlurNoise.
+  ///
+  /// In en, this message translates to:
+  /// **'Noise'**
+  String get miuixBlurNoise;
+
+  /// No description provided for @miuixSectionGlass.
+  ///
+  /// In en, this message translates to:
+  /// **'Liquid glass'**
+  String get miuixSectionGlass;
+
+  /// No description provided for @miuixGlassTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Liquid glass'**
+  String get miuixGlassTitle;
+
+  /// No description provided for @miuixGlassSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Glass navigation bar, chat header and composer with an edge highlight'**
+  String get miuixGlassSubtitle;
+
+  /// No description provided for @miuixGlassBlur.
+  ///
+  /// In en, this message translates to:
+  /// **'Glass blur'**
+  String get miuixGlassBlur;
+
+  /// No description provided for @miuixGlassHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'Edge highlight'**
+  String get miuixGlassHighlight;
+
+  /// No description provided for @miuixGlassRefraction.
+  ///
+  /// In en, this message translates to:
+  /// **'Refraction'**
+  String get miuixGlassRefraction;
+
+  /// No description provided for @miuixGlassRefractionUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Refraction is not supported on this device'**
+  String get miuixGlassRefractionUnavailable;
+
+  /// No description provided for @miuixReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Miuix settings'**
+  String get miuixReset;
 }
 
 class _AppLocalizationsDelegate

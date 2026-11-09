@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import '../../core/config/app_miuix.dart';
 import '../../core/config/app_shape.dart';
 import 'glossy_pill.dart';
+import 'miuix/miuix_surfaces.dart';
+
+BorderRadius get _cardRadius =>
+    AppMiuix.active ? MiuixShape.cardBorderRadius : AppShape.cardRadius;
 
 class SettingsPanel extends StatelessWidget {
   final Widget child;
@@ -21,7 +26,7 @@ class SettingsPanel extends StatelessWidget {
     final cs = Theme.of(context).colorScheme;
     return GlossyPill(
       color: color ?? cs.surfaceContainerHigh,
-      borderRadius: AppShape.cardRadius,
+      borderRadius: _cardRadius,
       padding: padding,
       depth: 6,
       child: child,
@@ -39,7 +44,7 @@ class SettingsCard extends StatelessWidget {
     final cs = Theme.of(context).colorScheme;
     return GlossyPill(
       color: cs.surfaceContainerHigh,
-      borderRadius: AppShape.cardRadius,
+      borderRadius: _cardRadius,
       depth: 6,
       child: Column(
         children: [

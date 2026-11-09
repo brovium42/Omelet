@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get loginTitle => 'Sign in to Komet';
+  String get loginTitle => 'Sign in to Omelet';
 
   @override
   String get loginSubtitle =>
@@ -799,7 +799,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get devicesTitle => 'Devices';
 
   @override
-  String get devicesPromoTitle => 'Devices in KOMET';
+  String get devicesPromoTitle => 'Devices in Omelet';
 
   @override
   String get devicesPromoSubtitle => 'Who has access to your account?';
@@ -1055,7 +1055,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get callTooltipExpand => 'Expand';
 
   @override
-  String get callTooltipKometHub => 'Komet';
+  String get callTooltipKometHub => 'Omelet';
 
   @override
   String get callInfoTitle => 'About call';
@@ -1238,7 +1238,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get callInfoNoDataYet => 'Data will appear after connecting…';
 
   @override
-  String get hubTitleMenu => 'Komet';
+  String get hubTitleMenu => 'Omelet';
 
   @override
   String get hubChatPageTitle => 'Anonymous chat';
@@ -2747,7 +2747,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get webPushIntro =>
-      'Komet has no ordinary push on iOS: Apple issues a notification token only to apps signed with a developer certificate, and a sideloaded build never gets one.\n\nThe way around it is a web app on the Home Screen. MAX\'s own server sends the notifications through Apple, and a separate icon displays them.\n\nThat needs a web session. Komet creates one and approves it itself, from this very device — no phone number or code required.';
+      'Omelet has no ordinary push on iOS: Apple issues a notification token only to apps signed with a developer certificate, and a sideloaded build never gets one.\n\nThe way around it is a web app on the Home Screen. MAX\'s own server sends the notifications through Apple, and a separate icon displays them.\n\nThat needs a web session. Omelet creates one and approves it itself, from this very device — no phone number or code required.';
 
   @override
   String get webPushConfirm => 'Continue';
@@ -2801,7 +2801,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get webPushWaitingBody =>
-      'Komet is approving the web session from this device. This usually takes a few seconds.';
+      'Omelet is approving the web session from this device. This usually takes a few seconds.';
 
   @override
   String get webPushNeedsOnline =>
@@ -2825,4 +2825,85 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get webPushStatusDevice => 'Device';
+
+  @override
+  String get appearanceVisualStyleMiuix => 'Miuix';
+
+  @override
+  String get appearanceMiuixSettings => 'Miuix settings';
+
+  @override
+  String get miuixSettingsTitle => 'Miuix theme';
+
+  @override
+  String get miuixEnableTitle => 'Miuix theme';
+
+  @override
+  String get miuixEnableSubtitle =>
+      'HyperOS design: colors, shapes and controls from the miuix library';
+
+  @override
+  String get miuixInactiveHint => 'Changes apply once the Miuix theme is on';
+
+  @override
+  String get miuixPreviewTitle => 'Preview';
+
+  @override
+  String get miuixSectionAppearance => 'Appearance';
+
+  @override
+  String get miuixMonetTitle => 'Monet colors';
+
+  @override
+  String get miuixMonetSubtitle =>
+      'Use the app accent color instead of HyperOS blue';
+
+  @override
+  String get miuixSmoothCornersTitle => 'Smooth corners';
+
+  @override
+  String get miuixSmoothCornersSubtitle =>
+      'Continuous squircle corners, like in HyperOS';
+
+  @override
+  String get miuixSectionBlur => 'Blur';
+
+  @override
+  String get miuixBlurTitle => 'Texture blur';
+
+  @override
+  String get miuixBlurSubtitle =>
+      'Blur under the navigation bar, chat header and composer';
+
+  @override
+  String get miuixBlurRadius => 'Blur radius';
+
+  @override
+  String get miuixBlurNoise => 'Noise';
+
+  @override
+  String get miuixSectionGlass => 'Liquid glass';
+
+  @override
+  String get miuixGlassTitle => 'Liquid glass';
+
+  @override
+  String get miuixGlassSubtitle =>
+      'Glass navigation bar, chat header and composer with an edge highlight';
+
+  @override
+  String get miuixGlassBlur => 'Glass blur';
+
+  @override
+  String get miuixGlassHighlight => 'Edge highlight';
+
+  @override
+  String get miuixGlassRefraction => 'Refraction';
+
+  @override
+  String get miuixGlassRefractionUnavailable =>
+      'Refraction is not supported on this device';
+
+  @override
+  String get miuixReset => 'Reset Miuix settings';
 }

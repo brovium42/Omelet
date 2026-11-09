@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:komet/backend/modules/contacts.dart';
 import 'package:komet/core/config/app_frost.dart';
+import 'package:komet/core/config/app_miuix.dart';
 import 'package:komet/core/config/app_nav_pill_style.dart';
 import 'package:komet/core/config/app_visual_style.dart';
 import 'package:komet/core/media/gallery_source.dart';
@@ -970,7 +971,7 @@ class _AttachmentSheetState extends State<AttachmentSheet> {
             builder: (context, _) {
               final cs = Theme.of(context).colorScheme;
               return ValueListenableBuilder<VisualStyle>(
-                valueListenable: AppVisualStyle.current,
+                valueListenable: AppMiuix.visualStyle,
                 builder: (context, style, _) =>
                     ValueListenableBuilder<NavPillStyle>(
                       valueListenable: AppNavPillStyle.current,

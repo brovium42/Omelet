@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import 'persisted_setting.dart';
 
-enum VisualStyle { materialYou, glossy, liquidGlass }
+enum VisualStyle { materialYou, glossy, liquidGlass, miuix }
 
 extension VisualStyleChrome on VisualStyle {
   bool get glossyChrome => this != VisualStyle.materialYou;

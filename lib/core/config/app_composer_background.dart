@@ -7,11 +7,11 @@ enum ComposerBackground { standard, frostBlur, liquidGlass }
 
 class ComposerMaterial {
   static bool isLiquid(ComposerBackground value) =>
-      value == ComposerBackground.liquidGlass && LiquidGlass.isSupported;
+      value == ComposerBackground.liquidGlass && LiquidGlass.available;
 
   static bool isFrost(ComposerBackground value) =>
       value == ComposerBackground.frostBlur ||
-      (value == ComposerBackground.liquidGlass && !LiquidGlass.isSupported);
+      (value == ComposerBackground.liquidGlass && !LiquidGlass.available);
 }
 
 class AppComposerBackground {
@@ -30,9 +30,6 @@ class AppComposerBackground {
 
   static Future<void> save(ComposerBackground value) => _setting.save(value);
 
-  static ComposerBackground _parse(String? val) => enumFromName(
-    ComposerBackground.values,
-    val,
-    ComposerBackground.standard,
-  );
+  static ComposerBackground _parse(String? val) =>
+      enumFromName(ComposerBackground.values, val, ComposerBackground.standard);
 }

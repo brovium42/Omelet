@@ -89,7 +89,7 @@ abstract class UpdateInstaller {
     final client = HttpClient();
     try {
       final request = await client.getUrl(Uri.parse(url));
-      request.headers.set(HttpHeaders.userAgentHeader, 'KometUpdateInstaller');
+      request.headers.set(HttpHeaders.userAgentHeader, 'OmeletUpdateInstaller');
       final response = await request.close();
       if (response.statusCode != HttpStatus.ok) {
         await response.drain<void>();

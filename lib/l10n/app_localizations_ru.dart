@@ -9,7 +9,7 @@ class AppLocalizationsRu extends AppLocalizations {
   AppLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
-  String get loginTitle => 'Войдите в Komet';
+  String get loginTitle => 'Войдите в Omelet';
 
   @override
   String get loginSubtitle =>
@@ -144,7 +144,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get codeConfirmation2faWarning =>
-      'По умолчанию код приходит в МАХ. Если код не приходит по SMS - не заходите в Komet/MAX 30 минут, и попробуйте заново.';
+      'По умолчанию код приходит в МАХ. Если код не приходит по SMS - не заходите в Omelet/MAX 30 минут, и попробуйте заново.';
 
   @override
   String get proxySettingsTitle => 'Прокси';
@@ -802,7 +802,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get devicesTitle => 'Устройства';
 
   @override
-  String get devicesPromoTitle => 'Устройства в Komet';
+  String get devicesPromoTitle => 'Устройства в Omelet';
 
   @override
   String get devicesPromoSubtitle => 'Кто имеет доступ к вашему аккаунту?';
@@ -1057,7 +1057,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get callTooltipExpand => 'Развернуть';
 
   @override
-  String get callTooltipKometHub => 'Komet';
+  String get callTooltipKometHub => 'Omelet';
 
   @override
   String get callInfoTitle => 'О звонке';
@@ -1240,7 +1240,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get callInfoNoDataYet => 'Данные появятся после соединения…';
 
   @override
-  String get hubTitleMenu => 'Komet';
+  String get hubTitleMenu => 'Omelet';
 
   @override
   String get hubChatPageTitle => 'Анонимный чат';
@@ -2759,7 +2759,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get webPushIntro =>
-      'На iOS у Комета нет обычных пушей: Apple выдаёт токен уведомлений только приложениям, подписанным сертификатом разработчика, а sideload-сборка такого не получает.\n\nОбход — веб-приложение на экране «Домой». Уведомления шлёт сам сервер MAX через Apple, а показывает их отдельная иконка.\n\nДля этого нужна веб-сессия. Комет создаст её и подтвердит сам, с этого же устройства — вводить номер и код не придётся.';
+      'На iOS у Omelet нет обычных пушей: Apple выдаёт токен уведомлений только приложениям, подписанным сертификатом разработчика, а sideload-сборка такого не получает.\n\nОбход — веб-приложение на экране «Домой». Уведомления шлёт сам сервер MAX через Apple, а показывает их отдельная иконка.\n\nДля этого нужна веб-сессия. Omelet создаст её и подтвердит сам, с этого же устройства — вводить номер и код не придётся.';
 
   @override
   String get webPushConfirm => 'Продолжить';
@@ -2813,7 +2813,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get webPushWaitingBody =>
-      'Комет подтверждает вход веб-сессии с этого устройства. Обычно занимает несколько секунд.';
+      'Omelet подтверждает вход веб-сессии с этого устройства. Обычно занимает несколько секунд.';
 
   @override
   String get webPushNeedsOnline =>
@@ -2837,4 +2837,86 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get webPushStatusDevice => 'Устройство';
+
+  @override
+  String get appearanceVisualStyleMiuix => 'Miuix';
+
+  @override
+  String get appearanceMiuixSettings => 'Настройки Miuix';
+
+  @override
+  String get miuixSettingsTitle => 'Тема Miuix';
+
+  @override
+  String get miuixEnableTitle => 'Тема Miuix';
+
+  @override
+  String get miuixEnableSubtitle =>
+      'Дизайн HyperOS: цвета, формы и элементы из библиотеки miuix';
+
+  @override
+  String get miuixInactiveHint =>
+      'Изменения применятся, когда тема Miuix включена';
+
+  @override
+  String get miuixPreviewTitle => 'Предпросмотр';
+
+  @override
+  String get miuixSectionAppearance => 'Оформление';
+
+  @override
+  String get miuixMonetTitle => 'Цвета Monet';
+
+  @override
+  String get miuixMonetSubtitle =>
+      'Брать акцентный цвет приложения вместо синего HyperOS';
+
+  @override
+  String get miuixSmoothCornersTitle => 'Сглаженные углы';
+
+  @override
+  String get miuixSmoothCornersSubtitle =>
+      'Непрерывное скругление (squircle), как в HyperOS';
+
+  @override
+  String get miuixSectionBlur => 'Размытие';
+
+  @override
+  String get miuixBlurTitle => 'Размытие панелей';
+
+  @override
+  String get miuixBlurSubtitle =>
+      'Размытие под навигацией, шапкой чата и полем ввода';
+
+  @override
+  String get miuixBlurRadius => 'Радиус размытия';
+
+  @override
+  String get miuixBlurNoise => 'Шум';
+
+  @override
+  String get miuixSectionGlass => 'Жидкое стекло';
+
+  @override
+  String get miuixGlassTitle => 'Жидкое стекло';
+
+  @override
+  String get miuixGlassSubtitle =>
+      'Стеклянные навигация, шапка чата и поле ввода с бликом по краю';
+
+  @override
+  String get miuixGlassBlur => 'Размытие стекла';
+
+  @override
+  String get miuixGlassHighlight => 'Блик по краю';
+
+  @override
+  String get miuixGlassRefraction => 'Преломление';
+
+  @override
+  String get miuixGlassRefractionUnavailable =>
+      'Преломление не поддерживается на этом устройстве';
+
+  @override
+  String get miuixReset => 'Сбросить настройки Miuix';
 }

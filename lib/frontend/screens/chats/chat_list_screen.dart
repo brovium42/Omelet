@@ -58,6 +58,7 @@ import '../../../core/config/app_frost.dart';
 import '../../../core/config/app_spectrum_background.dart';
 import '../../../core/config/app_nav_pill_style.dart';
 import '../../../core/cache/info_cache.dart';
+import '../../../core/config/app_miuix.dart';
 import '../../../core/config/app_visual_style.dart';
 import '../../../core/config/app_stories.dart';
 import '../../../core/config/app_colors.dart';
@@ -2498,7 +2499,7 @@ class _ChatListScreenState extends State<ChatListScreen>
                             right: 20,
                             bottom: bottomInset + 90,
                             child: ValueListenableBuilder<VisualStyle>(
-                              valueListenable: AppVisualStyle.current,
+                              valueListenable: AppMiuix.visualStyle,
                               builder: (context, style, child) =>
                                   ValueListenableBuilder<NavPillStyle>(
                                     valueListenable: AppNavPillStyle.current,

@@ -18,7 +18,7 @@ class KometSettingsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: cs.surface,
       appBar: ConnectionTitleBar(
-        titleText: 'Komet',
+        titleText: 'Omelet',
         backgroundColor: cs.surface,
       ),
       body: SafeArea(

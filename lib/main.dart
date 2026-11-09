@@ -45,6 +45,8 @@ import 'core/config/app_media_cache.dart';
 import 'core/config/app_video_note_quality.dart';
 import 'core/config/app_pill_gradient.dart';
 import 'core/config/app_visual_style.dart';
+import 'core/config/app_miuix.dart';
+import 'core/config/app_miuix_colors.dart';
 import 'core/config/app_chat_chrome.dart';
 import 'core/config/app_composer_background.dart';
 import 'core/config/app_composer_style.dart';
@@ -92,6 +94,7 @@ import 'frontend/screens/auth/login_screen.dart';
 import 'frontend/widgets/adaptive_shell.dart';
 import 'frontend/widgets/custom_notification.dart';
 import 'frontend/widgets/liquid_glass.dart';
+import 'frontend/widgets/miuix/miuix_theme.dart';
 import 'frontend/widgets/small_spinner.dart';
 import 'frontend/widgets/theme_reveal.dart';
 import 'frontend/widgets/floating_call_badge.dart';
@@ -221,7 +224,7 @@ void main(List<String> args) async {
   final amoledFuture = AppAmoled.load();
   final pillGradientFuture = AppPillGradient.load();
   final visualStyleFuture = AppVisualStyle.load();
-  final liquidGlassFuture = LiquidGlass.load();
+  final liquidGlassFuture = AppMiuix.load().then((_) => LiquidGlass.load());
   final chatChromeFuture = AppChatChrome.load();
   final composerStyleFuture = AppComposerStyle.load();
   final composerBackgroundFuture = AppComposerBackground.load();
@@ -864,6 +867,8 @@ class KometAppState extends State<KometApp>
   String? _themeCacheFontId;
   ColorScheme? _themeCacheLight;
   ColorScheme? _themeCacheDark;
+  bool? _themeCacheMiuix;
+  bool? _themeCacheSmooth;
   ThemeData? _lightTheme;
   ThemeData? _darkTheme;
 
@@ -890,40 +895,52 @@ class KometAppState extends State<KometApp>
   }
 
   void _rebuildThemesIfNeeded(ColorScheme light, ColorScheme dark) {
+    final miuix = AppMiuix.active;
+    final smooth = AppMiuix.smoothCorners.current.value;
     if (_themeCacheFontId == _fontId &&
         _themeCacheLight == light &&
-        _themeCacheDark == dark) {
+        _themeCacheDark == dark &&
+        _themeCacheMiuix == miuix &&
+        _themeCacheSmooth == smooth) {
       return;
     }
     _themeCacheFontId = _fontId;
     _themeCacheLight = light;
     _themeCacheDark = dark;
+    _themeCacheMiuix = miuix;
+    _themeCacheSmooth = smooth;
     final displayFont = AppDisplayFont(AppFonts.displayFamily(_fontId));
-    _lightTheme = withM3ETheme(
+    _lightTheme = _buildTheme(light, Brightness.light, displayFont, miuix);
+    _darkTheme = _buildTheme(dark, Brightness.dark, displayFont, miuix);
+  }
+
+  ThemeData _buildTheme(
+    ColorScheme scheme,
+    Brightness brightness,
+    AppDisplayFont displayFont,
+    bool miuix,
+  ) {
+    final theme = withM3ETheme(
       ThemeData(
         useMaterial3: true,
-        colorScheme: light,
+        colorScheme: scheme,
         pageTransitionsTheme: _appPageTransitions,
         progressIndicatorTheme: _expressiveProgressTheme,
         extensions: [displayFont],
         textTheme: AppFonts.textTheme(
           _fontId,
-          ThemeData(brightness: Brightness.light).textTheme,
+          ThemeData(brightness: brightness).textTheme,
         ),
       ),
     );
-    _darkTheme = withM3ETheme(
-      ThemeData(
-        useMaterial3: true,
-        colorScheme: dark,
-        pageTransitionsTheme: _appPageTransitions,
-        progressIndicatorTheme: _expressiveProgressTheme,
-        extensions: [displayFont],
-        textTheme: AppFonts.textTheme(
-          _fontId,
-          ThemeData(brightness: Brightness.dark).textTheme,
-        ),
-      ),
+    return miuix ? MiuixThemeData.apply(theme) : theme;
+  }
+
+  ColorScheme _miuixScheme(ColorScheme base) {
+    final brightness = base.brightness;
+    return MiuixPalette.of(brightness).toColorScheme(
+      brightness,
+      monet: AppMiuix.monet.current.value ? base : null,
     );
   }
 
@@ -980,6 +997,9 @@ class KometAppState extends State<KometApp>
             accentSeed,
             wallpaperSeed,
             AppWallpaperTint.current,
+            AppVisualStyle.current,
+            AppMiuix.monet.current,
+            AppMiuix.smoothCorners.current,
           ]),
           builder: (context, _) {
             final seed =
@@ -1001,13 +1021,18 @@ class KometAppState extends State<KometApp>
               darkBase = darkDynamic ?? s.dark;
             }
 
-            final lightScheme = _adjustLightScheme(lightBase);
-            final darkScheme = _adjustDarkScheme(darkBase);
+            final miuix = AppMiuix.active;
+            final lightScheme = miuix
+                ? _miuixScheme(lightBase)
+                : _adjustLightScheme(lightBase);
+            final darkScheme = miuix
+                ? _miuixScheme(darkBase)
+                : _adjustDarkScheme(darkBase);
 
             _rebuildThemesIfNeeded(lightScheme, darkScheme);
 
             return MaterialApp(
-              title: 'Komet',
+              title: 'Omelet',
               debugShowCheckedModeBanner: false,
               locale: _locale,
               themeMode: _effectiveThemeMode,

@@ -7,7 +7,7 @@ enum ChatChromeStyle { color, blur, none, transparent, liquidGlass }
 
 class ChatChromeMaterial {
   static bool isLiquid(ChatChromeStyle style) =>
-      style == ChatChromeStyle.liquidGlass && LiquidGlass.isSupported;
+      style == ChatChromeStyle.liquidGlass && LiquidGlass.available;
 }
 
 class AppChatChrome {

@@ -9,6 +9,7 @@ import 'appearance_screen.dart';
 import 'chat_background_screen.dart';
 import 'font_settings_screen.dart';
 import 'message_actions_screen.dart';
+import 'miuix_settings_screen.dart';
 import 'theme_settings_screen.dart';
 
 class _CustomizationCategory {
@@ -43,6 +44,11 @@ class _CustomizationSectionState extends State<CustomizationSection> {
       icon: Symbols.styler,
       title: 'Внешний вид',
       builder: (context) => const AppearanceScreen(),
+    ),
+    _CustomizationCategory(
+      icon: Symbols.blur_on,
+      title: 'Тема Miuix',
+      builder: (context) => const MiuixSettingsScreen(),
     ),
     _CustomizationCategory(
       icon: Symbols.wallpaper,

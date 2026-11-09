@@ -33,7 +33,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation"/>
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>
     <application
-        android:label="Komet"
+        android:label="Omelet"
         android:name="${applicationName}"
         android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/ic_launcher">
@@ -41,7 +41,7 @@
             android:name="ru.komet.app.MainActivity"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
-            android:label="Komet"
+            android:label="Omelet"
             android:launchMode="singleTop"
             android:taskAffinity=""
             android:theme="@style/LaunchTheme"
@@ -108,7 +108,7 @@
             android:enabled="false"
             android:exported="true"
             android:icon="@mipmap/ic_launcher_minimal"
-            android:label="Komet"
+            android:label="Omelet"
             android:targetActivity="ru.komet.app.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

@@ -2,9 +2,11 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
+import '../../core/config/app_miuix.dart';
 import '../../core/config/app_pill_gradient.dart';
 import '../../core/config/app_visual_style.dart';
 import 'liquid_glass.dart';
+import 'miuix/miuix_surfaces.dart';
 
 class _GlossyParts {
   final bool dark;
@@ -124,9 +126,10 @@ class GlossyPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<VisualStyle>(
-      valueListenable: AppVisualStyle.current,
+      valueListenable: AppMiuix.visualStyle,
       builder: (context, style, _) {
         if (style == VisualStyle.materialYou) return _flat(context);
+        if (style == VisualStyle.miuix) return _miuix(context);
         if (liquid && LiquidGlass.isSupported) return _liquid(context);
         return ValueListenableBuilder<bool>(
           valueListenable: AppPillGradient.current,
@@ -165,6 +168,52 @@ class GlossyPill extends StatelessWidget {
                 ),
         ),
       ),
+    );
+  }
+
+  Widget _miuix(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final base = color ?? cs.surfaceContainerHigh;
+    final content = Padding(padding: padding, child: child);
+    Widget interactive() => _inert
+        ? content
+        : Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              onTap: onTap,
+              onLongPress: onLongPress,
+              child: content,
+            ),
+          );
+
+    if (liquid && AppMiuix.glassEnabled.current.value) {
+      return MiuixGlassSurface(
+        borderRadius: borderRadius,
+        shadow: elevated,
+        child: interactive(),
+      );
+    }
+    if (blurSigma != null && base.a < 1 && AppMiuix.blurSigma > 0) {
+      return MiuixBlurSurface(
+        borderRadius: borderRadius,
+        tint: base,
+        backdropKey: backdropKey,
+        child: interactive(),
+      );
+    }
+    return Material(
+      color: base,
+      elevation: elevated ? 2 : 0,
+      shadowColor: Colors.black.withValues(alpha: 0.25),
+      surfaceTintColor: Colors.transparent,
+      shape: MiuixShape.border(
+        borderRadius,
+        side: borderSide ?? BorderSide.none,
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: _inert
+          ? content
+          : InkWell(onTap: onTap, onLongPress: onLongPress, child: content),
     );
   }
 

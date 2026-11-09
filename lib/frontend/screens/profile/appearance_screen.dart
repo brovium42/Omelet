@@ -14,6 +14,7 @@ import '../../../core/config/app_composer_background.dart';
 import '../../../core/config/app_composer_style.dart';
 import '../../../core/config/app_nav_pill_style.dart';
 import '../../../core/config/app_spectrum_background.dart';
+import '../../../core/config/visual_style_controller.dart';
 import '../../../core/utils/bubble_radius.dart';
 import '../../../core/utils/debouncer.dart';
 import '../../../core/utils/haptics.dart';
@@ -22,6 +23,7 @@ import '../../../main.dart';
 import '../../widgets/liquid_glass.dart';
 import '../../widgets/settings_card.dart';
 import '../../../core/config/app_shape.dart';
+import 'miuix_settings_screen.dart';
 
 class AppearanceScreen extends StatefulWidget {
   const AppearanceScreen({super.key});
@@ -139,27 +141,6 @@ class _AppearanceScreenState extends State<AppearanceScreen> {
   }
 }
 
-void _applyVisualStyle(VisualStyle style) {
-  AppVisualStyle.save(style);
-  if (style == VisualStyle.liquidGlass) {
-    if (AppNavPillStyle.current.value != NavPillStyle.auto) {
-      AppNavPillStyle.save(NavPillStyle.liquidGlass);
-    }
-    AppComposerBackground.save(ComposerBackground.liquidGlass);
-    AppChatChrome.save(ChatChromeStyle.liquidGlass);
-    return;
-  }
-  if (AppNavPillStyle.current.value == NavPillStyle.liquidGlass) {
-    AppNavPillStyle.save(NavPillStyle.frostBlur);
-  }
-  if (AppComposerBackground.current.value == ComposerBackground.liquidGlass) {
-    AppComposerBackground.save(ComposerBackground.frostBlur);
-  }
-  if (AppChatChrome.current.value == ChatChromeStyle.liquidGlass) {
-    AppChatChrome.save(ChatChromeStyle.transparent);
-  }
-}
-
 class _VisualStyleCard extends StatelessWidget {
   const _VisualStyleCard();
 
@@ -192,35 +173,72 @@ class _VisualStyleCard extends StatelessWidget {
                   current == VisualStyle.liquidGlass && !LiquidGlass.isSupported
                   ? VisualStyle.glossy
                   : current;
-              return SegmentedButton<VisualStyle>(
-                showSelectedIcon: false,
-                segments: [
-                  ButtonSegment(
-                    value: VisualStyle.materialYou,
-                    label: Text(l10n.appearanceVisualStyleMaterialYou),
-                  ),
-                  ButtonSegment(
-                    value: VisualStyle.glossy,
-                    label: Text(l10n.appearanceVisualStyleGlossy),
-                  ),
-                  if (LiquidGlass.isSupported)
-                    ButtonSegment(
-                      value: VisualStyle.liquidGlass,
-                      label: Text(l10n.appearanceVisualStyleLiquidGlass),
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: SegmentedButton<VisualStyle>(
+                      showSelectedIcon: false,
+                      segments: [
+                        ButtonSegment(
+                          value: VisualStyle.materialYou,
+                          label: Text(l10n.appearanceVisualStyleMaterialYou),
+                        ),
+                        ButtonSegment(
+                          value: VisualStyle.glossy,
+                          label: Text(l10n.appearanceVisualStyleGlossy),
+                        ),
+                        if (LiquidGlass.isSupported)
+                          ButtonSegment(
+                            value: VisualStyle.liquidGlass,
+                            label: Text(l10n.appearanceVisualStyleLiquidGlass),
+                          ),
+                        ButtonSegment(
+                          value: VisualStyle.miuix,
+                          label: Text(l10n.appearanceVisualStyleMiuix),
+                        ),
+                      ],
+                      selected: {selectable},
+                      onSelectionChanged: (set) {
+                        if (set.isNotEmpty) {
+                          Haptics.selection();
+                          VisualStyleController.apply(set.first);
+                        }
+                      },
                     ),
+                  ),
+                  if (current == VisualStyle.miuix) ...[
+                    const SizedBox(height: 12),
+                    FilledButton.tonal(
+                      onPressed: () => _openMiuixSettings(context),
+                      style: FilledButton.styleFrom(
+                        shape: AppShape.buttonBorder,
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Symbols.tune, size: 18, weight: 500),
+                          const SizedBox(width: 8),
+                          Text(l10n.appearanceMiuixSettings),
+                        ],
+                      ),
+                    ),
+                  ],
                 ],
-                selected: {selectable},
-                onSelectionChanged: (set) {
-                  if (set.isNotEmpty) {
-                    Haptics.selection();
-                    _applyVisualStyle(set.first);
-                  }
-                },
               );
             },
           ),
         ],
       ),
+    );
+  }
+
+  void _openMiuixSettings(BuildContext context) {
+    Haptics.tap();
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const MiuixSettingsScreen()),
     );
   }
 }
@@ -255,7 +273,7 @@ class _ChatChromeCard extends StatelessWidget {
             builder: (context, current, _) {
               final selectable =
                   current == ChatChromeStyle.liquidGlass &&
-                      !LiquidGlass.isSupported
+                      !LiquidGlass.available
                   ? ChatChromeStyle.transparent
                   : current;
               return SingleChildScrollView(
@@ -279,7 +297,7 @@ class _ChatChromeCard extends StatelessWidget {
                       value: ChatChromeStyle.transparent,
                       label: Text(l10n.appearanceChatChromeTransparent),
                     ),
-                    if (LiquidGlass.isSupported)
+                    if (LiquidGlass.available)
                       ButtonSegment(
                         value: ChatChromeStyle.liquidGlass,
                         label: Text(l10n.appearanceGlassMaterial),
@@ -365,7 +383,7 @@ class _ComposerBarCard extends StatelessWidget {
             builder: (context, current, _) {
               final selectable =
                   current == ComposerBackground.liquidGlass &&
-                      !LiquidGlass.isSupported
+                      !LiquidGlass.available
                   ? ComposerBackground.frostBlur
                   : current;
               return SegmentedButton<ComposerBackground>(
@@ -379,7 +397,7 @@ class _ComposerBarCard extends StatelessWidget {
                     value: ComposerBackground.frostBlur,
                     label: Text(l10n.appearanceComposerBackgroundFrost),
                   ),
-                  if (LiquidGlass.isSupported)
+                  if (LiquidGlass.available)
                     ButtonSegment(
                       value: ComposerBackground.liquidGlass,
                       label: Text(l10n.appearanceGlassMaterial),
@@ -430,8 +448,7 @@ class _NavPillStyleCard extends StatelessWidget {
             valueListenable: AppNavPillStyle.current,
             builder: (context, current, _) {
               final selectable =
-                  current == NavPillStyle.liquidGlass &&
-                      !LiquidGlass.isSupported
+                  current == NavPillStyle.liquidGlass && !LiquidGlass.available
                   ? NavPillStyle.frostBlur
                   : current;
               return SingleChildScrollView(
@@ -451,7 +468,7 @@ class _NavPillStyleCard extends StatelessWidget {
                       value: NavPillStyle.frostBlur,
                       label: Text(l10n.appearanceNavPillFrost),
                     ),
-                    if (LiquidGlass.isSupported)
+                    if (LiquidGlass.available)
                       ButtonSegment(
                         value: NavPillStyle.liquidGlass,
                         label: Text(l10n.appearanceGlassMaterial),

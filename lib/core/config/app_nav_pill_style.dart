@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../../frontend/widgets/liquid_glass.dart';
+import 'app_miuix.dart';
 import 'app_visual_style.dart';
 import 'persisted_setting.dart';
 
@@ -9,18 +10,24 @@ enum NavPillStyle { auto, glossy, frostBlur, liquidGlass }
 class NavPillMaterial {
   static NavPillStyle resolve(NavPillStyle style) {
     if (style != NavPillStyle.auto) return style;
+    if (AppMiuix.active) {
+      if (AppMiuix.glassEnabled.current.value) return NavPillStyle.liquidGlass;
+      return AppMiuix.blurEnabled.current.value
+          ? NavPillStyle.frostBlur
+          : NavPillStyle.glossy;
+    }
     return AppVisualStyle.current.value == VisualStyle.liquidGlass
         ? NavPillStyle.liquidGlass
         : NavPillStyle.glossy;
   }
 
   static bool isLiquid(NavPillStyle style) =>
-      resolve(style) == NavPillStyle.liquidGlass && LiquidGlass.isSupported;
+      resolve(style) == NavPillStyle.liquidGlass && LiquidGlass.available;
 
   static bool isFrost(NavPillStyle style) {
     final resolved = resolve(style);
     return resolved == NavPillStyle.frostBlur ||
-        (resolved == NavPillStyle.liquidGlass && !LiquidGlass.isSupported);
+        (resolved == NavPillStyle.liquidGlass && !LiquidGlass.available);
   }
 }
 
