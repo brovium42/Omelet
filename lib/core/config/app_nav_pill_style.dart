@@ -36,7 +36,7 @@ class AppNavPillStyle {
 
   static final _setting = PersistedEnum<NavPillStyle>(
     prefKey: prefKey,
-    defaultValue: NavPillStyle.glossy,
+    defaultValue: NavPillStyle.auto,
     encode: (value) => value.name,
     decode: _parse,
   );
@@ -48,5 +48,5 @@ class AppNavPillStyle {
   static Future<void> save(NavPillStyle value) => _setting.save(value);
 
   static NavPillStyle _parse(String? val) =>
-      enumFromName(NavPillStyle.values, val, NavPillStyle.glossy);
+      enumFromName(NavPillStyle.values, val, NavPillStyle.auto);
 }

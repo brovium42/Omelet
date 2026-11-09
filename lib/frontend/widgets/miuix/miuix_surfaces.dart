@@ -180,6 +180,7 @@ class MiuixGlassSurface extends StatelessWidget {
   final BorderRadius borderRadius;
   final Color tint;
   final bool shadow;
+  final bool edgeHighlight;
   final Widget child;
 
   const MiuixGlassSurface({
@@ -187,6 +188,7 @@ class MiuixGlassSurface extends StatelessWidget {
     required this.borderRadius,
     this.tint = Colors.transparent,
     this.shadow = true,
+    this.edgeHighlight = true,
     required this.child,
   });
 
@@ -212,7 +214,9 @@ class MiuixGlassSurface extends StatelessWidget {
       builder: (context, _) {
         final brightness = Theme.of(context).brightness;
         final layer = tint.a > 0.01 ? tint : materialTint(brightness);
-        final highlight = AppMiuix.glassHighlight.current.value;
+        final highlight = edgeHighlight
+            ? AppMiuix.glassHighlight.current.value
+            : 0.0;
         final sigma = AppMiuix.glassSigma;
         final refraction = AppMiuix.refractionStrength;
         final noise = AppMiuix.blurNoise.current.value;

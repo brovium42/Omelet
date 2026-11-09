@@ -106,6 +106,7 @@ class GlassSurface extends StatelessWidget {
         borderRadius: borderRadius,
         tint: liquidTint,
         shadow: false,
+        edgeHighlight: borderRadius != BorderRadius.zero,
         child: decorated,
       );
     }

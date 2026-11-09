@@ -561,6 +561,10 @@ class ComposerInputBar extends StatelessWidget {
     return _barSurface(cs, bar);
   }
 
+  static const double _fieldRadius = 28;
+
+  static const double _previewRadius = 22;
+
   bool get _flat => !ComposerChrome.isGlossy(style);
 
   bool get _frost => ComposerMaterial.isFrost(background);
@@ -597,7 +601,11 @@ class ComposerInputBar extends StatelessWidget {
     );
   }
 
-  Widget _fieldSurface(ColorScheme cs, Widget child) {
+  Widget _fieldSurface(
+    ColorScheme cs,
+    Widget child, {
+    double radius = _fieldRadius,
+  }) {
     if (_flat) return child;
     return GlossyPill(
       color: _translucent
@@ -609,7 +617,7 @@ class ComposerInputBar extends StatelessWidget {
       blurSigma: _frost ? AppFrost.sigma : null,
       liquid: _liquid,
       backdropKey: backdropKey,
-      borderRadius: BorderRadius.circular(28),
+      borderRadius: BorderRadius.circular(radius),
       depth: 8,
       borderSide: BorderSide(
         color: cs.outlineVariant.withValues(alpha: 0.5),
@@ -698,7 +706,7 @@ class ComposerInputBar extends StatelessWidget {
               : 'Пересылка от $senderName'
         : 'Пересылка: ${_forwardCount(messages.length)}';
     final row = Padding(
-      padding: const EdgeInsets.fromLTRB(16, 6, 8, 2),
+      padding: _previewPadding,
       child: Row(
         children: [
           Icon(Symbols.forward, size: 20, color: cs.primary),
@@ -766,7 +774,7 @@ class ComposerInputBar extends StatelessWidget {
         );
         final preview = info.previewText();
         final row = Padding(
-          padding: const EdgeInsets.fromLTRB(16, 6, 8, 2),
+          padding: _previewPadding,
           child: Row(
             children: [
               _replyIconButton(cs),
@@ -814,8 +822,18 @@ class ComposerInputBar extends StatelessWidget {
     );
   }
 
+  EdgeInsets get _previewPadding => _flat
+      ? const EdgeInsets.fromLTRB(16, 6, 8, 2)
+      : const EdgeInsets.fromLTRB(12, 2, 2, 2);
+
   Widget _previewSurface(ColorScheme cs, Widget child) {
-    if (_flat && _translucent) return child;
+    if (!_flat) {
+      return Padding(
+        padding: EdgeInsets.fromLTRB(_barSideInset, 6, _barSideInset, 0),
+        child: _fieldSurface(cs, child, radius: _previewRadius),
+      );
+    }
+    if (_translucent) return child;
     if (!_translucent && chrome != ChatChromeStyle.transparent) return child;
     return GlassSurface(
       liquid: _liquid,
