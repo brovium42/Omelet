@@ -393,7 +393,7 @@ class _SettingsTabState extends State<SettingsTab> with SpectrumSurface {
                         _buildHeader(ctx, cs, fullName, phone, t),
                   ),
                 ),
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: MediaPlaybackPill(
                     margin: EdgeInsets.fromLTRB(_cardSide, 8, _cardSide, 0),
                   ),
@@ -458,10 +458,10 @@ class _SettingsTabState extends State<SettingsTab> with SpectrumSurface {
                     ),
                   ),
                 ),
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(_cardSide, 12, _cardSide, 0),
-                    child: CustomizationSection(),
+                    child: const CustomizationSection(),
                   ),
                 ),
                 SliverToBoxAdapter(
