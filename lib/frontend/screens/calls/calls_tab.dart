@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import '../../../main.dart' show api, accountModule;
 import '../../../backend/modules/account.dart';
+import '../../../core/config/app_miuix.dart';
 import '../../../core/storage/app_database.dart';
 import '../../../core/utils/format.dart';
 import '../../../core/calls/call_controller.dart';
@@ -444,25 +445,27 @@ class _CallsTabState extends State<CallsTab>
           _selectedTabIndex = index;
         });
       },
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: isSelected ? cs.primary : Colors.transparent,
-              width: 2,
+      child: AppMiuix.active
+          ? MiuixTabChip(label: label, selected: isSelected)
+          : Container(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: isSelected ? cs.primary : Colors.transparent,
+                    width: 2,
+                  ),
+                ),
+              ),
+              child: Text(
+                label,
+                style: TextStyle(
+                  color: isSelected ? cs.primary : cs.onSurfaceVariant,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             ),
-          ),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: isSelected ? cs.primary : cs.onSurfaceVariant,
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
     );
   }
 

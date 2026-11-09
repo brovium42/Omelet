@@ -11,8 +11,16 @@ BorderRadius get _cardRadius =>
 
 double get _tileTitleSize => AppMiuix.active ? 17 : 16;
 
-FontWeight get _tileTitleWeight =>
-    AppMiuix.active ? FontWeight.w400 : FontWeight.w500;
+FontWeight get _tileTitleWeight => FontWeight.w500;
+
+double get _tileIconSize => AppMiuix.active ? 24 : 22;
+
+double get _tileIconFill => AppMiuix.active ? 1 : 0;
+
+double get _tileSummarySize => AppMiuix.active ? 14 : 13;
+
+Color _tileIconColor(ColorScheme cs) =>
+    AppMiuix.active ? cs.onSurface : cs.onSurfaceVariant;
 
 double get _tileInset => AppMiuix.active ? 16 : 20;
 
@@ -57,7 +65,7 @@ class SettingsCard extends StatelessWidget {
         children: [
           for (var i = 0; i < children.length; i++) ...[
             children[i],
-            if (i != children.length - 1)
+            if (i != children.length - 1 && !AppMiuix.active)
               Padding(
                 padding: const EdgeInsets.only(left: 58),
                 child: Divider(
@@ -110,7 +118,13 @@ class SettingsToggleTile extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Icon(icon, color: cs.onSurfaceVariant, size: 22, weight: 400),
+                  Icon(
+                    icon,
+                    color: _tileIconColor(cs),
+                    size: _tileIconSize,
+                    weight: 400,
+                    fill: _tileIconFill,
+                  ),
                   const SizedBox(width: 16),
                   Expanded(
                     child: Column(
@@ -130,7 +144,7 @@ class SettingsToggleTile extends StatelessWidget {
                             subtitle!,
                             style: TextStyle(
                               color: cs.onSurfaceVariant,
-                              fontSize: 13,
+                              fontSize: _tileSummarySize,
                               height: 1.3,
                             ),
                           ),
@@ -187,9 +201,10 @@ class SettingsNavTile extends StatelessWidget {
               leading ??
                   Icon(
                     icon,
-                    color: tintColor ?? cs.onSurfaceVariant,
-                    size: 22,
+                    color: tintColor ?? _tileIconColor(cs),
+                    size: _tileIconSize,
                     weight: 400,
+                    fill: _tileIconFill,
                   ),
               const SizedBox(width: 16),
               Expanded(

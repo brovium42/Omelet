@@ -80,6 +80,24 @@ class MiuixThemeData {
         }),
         overlayColor: const WidgetStatePropertyAll(Colors.transparent),
       ),
+      tabBarTheme: theme.tabBarTheme.copyWith(
+        indicator: ShapeDecoration(
+          color: cs.surfaceContainerHigh,
+          shape: MiuixShape.border(const BorderRadius.all(Radius.circular(12))),
+        ),
+        indicatorSize: TabBarIndicatorSize.tab,
+        dividerColor: Colors.transparent,
+        dividerHeight: 0,
+        labelColor: cs.onSurface,
+        unselectedLabelColor: palette.summary,
+        labelStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        unselectedLabelStyle: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+        ),
+        overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+        splashFactory: NoSplash.splashFactory,
+      ),
       segmentedButtonTheme: theme.segmentedButtonTheme.copyWith(
         style: _segmentStyle(cs, palette),
       ),

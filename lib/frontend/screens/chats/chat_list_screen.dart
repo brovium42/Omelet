@@ -1850,7 +1850,9 @@ class _ChatListScreenState extends State<ChatListScreen>
                                   ? null
                                   : _openSearch,
                               child: GlossyPill(
-                                color: cs.surfaceContainerHighest,
+                                color: AppMiuix.active
+                                    ? cs.surfaceContainerHigh
+                                    : cs.surfaceContainerHighest,
                                 borderRadius: BorderRadius.circular(50),
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 16,
@@ -2243,7 +2245,7 @@ class _ChatListScreenState extends State<ChatListScreen>
       left: 0,
       right: 0,
       bottom: _isSelectionMode
-          ? -(MiuixNavigationBar.itemHeight + bottomInset + 1)
+          ? -(MiuixNavigationBar.occupiedHeight(bottomInset) + 24)
           : 0,
       child: RepaintBoundary(
         child: MiuixNavigationBar(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import '../../../core/config/app_miuix.dart';
 import '../../../core/utils/haptics.dart';
 import '../../widgets/glossy_pill.dart';
 import '../../widgets/settings_card.dart';
@@ -116,9 +117,10 @@ class _CustomizationSectionState extends State<CustomizationSection> {
             children: [
               Icon(
                 Symbols.palette,
-                color: cs.onSurfaceVariant,
-                size: 22,
+                color: AppMiuix.active ? cs.onSurface : cs.onSurfaceVariant,
+                size: AppMiuix.active ? 24 : 22,
                 weight: 400,
+                fill: AppMiuix.active ? 1 : 0,
               ),
               const SizedBox(width: 16),
               Expanded(
@@ -152,16 +154,18 @@ class _CustomizationSectionState extends State<CustomizationSection> {
     final tiles = <Widget>[];
     for (var i = 0; i < _categories.length; i++) {
       final category = _categories[i];
-      tiles.add(
-        Padding(
-          padding: const EdgeInsets.only(left: 58),
-          child: Divider(
-            height: 1,
-            thickness: 1,
-            color: cs.outlineVariant.withValues(alpha: 0.35),
+      if (!AppMiuix.active) {
+        tiles.add(
+          Padding(
+            padding: const EdgeInsets.only(left: 58),
+            child: Divider(
+              height: 1,
+              thickness: 1,
+              color: cs.outlineVariant.withValues(alpha: 0.35),
+            ),
           ),
-        ),
-      );
+        );
+      }
       tiles.add(
         SettingsNavTile(
           icon: category.icon,
