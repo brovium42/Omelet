@@ -24,6 +24,7 @@ import '../../widgets/section_header.dart';
 import '../../widgets/settings_card.dart';
 import '../../widgets/small_spinner.dart';
 import '../auth/login_screen.dart';
+import '../../widgets/miuix/miuix_components.dart';
 
 enum SpoofingMethod { partial, full }
 
@@ -457,6 +458,7 @@ class _SpoofScreenState extends State<SpoofScreen> {
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
                 children: [
+                  MiuixLargeTitle(l10n.spoofScreenTitle),
                   _buildEnableCard(),
                   const SizedBox(height: 12),
                   _buildInfoCard(),

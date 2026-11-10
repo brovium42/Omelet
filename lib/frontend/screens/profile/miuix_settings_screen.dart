@@ -86,6 +86,7 @@ class _MiuixSettingsScreenState extends State<MiuixSettingsScreen> {
             physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.only(top: 4, bottom: 120),
             children: [
+              MiuixLargeTitle(l10n.miuixSettingsTitle, inset: 26),
               ..._themeSection(l10n),
               MiuixSmallTitle(l10n.miuixPreviewTitle),
               const MiuixCard(

@@ -8,6 +8,7 @@ import '../../../core/utils/haptics.dart';
 import '../../widgets/custom_notification.dart';
 import '../../widgets/settings_radio_tile.dart';
 import '../../widgets/settings_card.dart';
+import '../../widgets/miuix/miuix_components.dart';
 
 class AppIconScreen extends StatefulWidget {
   const AppIconScreen({super.key});
@@ -59,6 +60,7 @@ class _AppIconScreenState extends State<AppIconScreen> {
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
           children: [
+            const MiuixLargeTitle('Иконка приложения'),
             SettingsPanel(
               padding: const EdgeInsets.fromLTRB(20, 18, 20, 12),
               child: Column(

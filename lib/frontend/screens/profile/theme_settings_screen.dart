@@ -12,6 +12,7 @@ import '../../../main.dart';
 import '../../widgets/glossy_pill.dart';
 import '../../widgets/settings_radio_tile.dart';
 import '../../widgets/settings_card.dart';
+import '../../widgets/miuix/miuix_components.dart';
 
 class ThemeSettingsScreen extends StatelessWidget {
   const ThemeSettingsScreen({super.key});
@@ -32,12 +33,15 @@ class ThemeSettingsScreen extends StatelessWidget {
         child: ListView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
-          children: const [
-            _ThemeModeCard(),
-            SizedBox(height: 12),
-            _AmoledCard(),
-            SizedBox(height: 12),
-            _ScheduleCard(),
+          children: [
+            MiuixLargeTitle(l10n.themeSettingsTitle),
+            ...const [
+              _ThemeModeCard(),
+              SizedBox(height: 12),
+              _AmoledCard(),
+              SizedBox(height: 12),
+              _ScheduleCard(),
+            ],
           ],
         ),
       ),

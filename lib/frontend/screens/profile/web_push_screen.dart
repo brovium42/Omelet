@@ -16,6 +16,7 @@ import '../../widgets/custom_notification.dart';
 import '../../widgets/section_header.dart';
 import '../../widgets/settings_card.dart';
 import '../../widgets/small_spinner.dart';
+import '../../widgets/miuix/miuix_components.dart';
 
 const String kWebPushSiteUrl = 'https://push.komet.pw';
 
@@ -203,7 +204,10 @@ class _WebPushScreenState extends State<WebPushScreen> {
             : ListView(
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
-                children: _sections(context, cs, l10n),
+                children: [
+                  MiuixLargeTitle(l10n.webPushTitle),
+                  ..._sections(context, cs, l10n),
+                ],
               ),
       ),
     );

@@ -7,6 +7,7 @@ import '../../../core/config/app_message_actions_style.dart';
 import '../../../core/utils/haptics.dart';
 import '../../widgets/settings_radio_tile.dart';
 import '../../widgets/settings_card.dart';
+import '../../widgets/miuix/miuix_components.dart';
 
 class MessageActionsScreen extends StatelessWidget {
   const MessageActionsScreen({super.key});
@@ -25,7 +26,10 @@ class MessageActionsScreen extends StatelessWidget {
         child: ListView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
-          children: const [_StyleCard()],
+          children: [
+            const MiuixLargeTitle('Меню действий'),
+            ...const [_StyleCard()],
+          ],
         ),
       ),
     );

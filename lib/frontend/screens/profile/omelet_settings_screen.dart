@@ -7,6 +7,7 @@ import '../../../core/config/omelet_settings.dart';
 import '../../../main.dart';
 import '../../widgets/section_header.dart';
 import '../../widgets/settings_card.dart';
+import '../../widgets/miuix/miuix_components.dart';
 
 class OmeletSettingsScreen extends StatelessWidget {
   const OmeletSettingsScreen({super.key});
@@ -27,6 +28,7 @@ class OmeletSettingsScreen extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
           children: [
+            const MiuixLargeTitle('Omelet'),
             const SectionHeader(
               'Сообщения',
               padding: EdgeInsets.fromLTRB(8, 0, 8, 8),

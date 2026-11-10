@@ -11,6 +11,7 @@ import '../../widgets/connection_status.dart';
 import '../../widgets/custom_notification.dart';
 import '../../widgets/prompt_dialog.dart';
 import '../../widgets/settings_card.dart';
+import '../../widgets/miuix/miuix_components.dart';
 
 class FontSettingsScreen extends StatefulWidget {
   const FontSettingsScreen({super.key});
@@ -122,6 +123,7 @@ class _FontSettingsScreenState extends State<FontSettingsScreen> {
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 120),
           children: [
+            MiuixLargeTitle(l10n.fontSettingsTitle),
             _PreviewCard(fontId: currentId),
             const SizedBox(height: 28),
             _SectionLabel(

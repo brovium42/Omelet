@@ -42,47 +42,89 @@ class MiuixSmallTitle extends StatelessWidget {
   }
 }
 
-class MiuixTopBar extends StatelessWidget implements PreferredSizeWidget {
+class MiuixTopBar extends StatefulWidget implements PreferredSizeWidget {
   static const double height = 56;
 
   final String title;
   final Color? backgroundColor;
   final List<Widget> actions;
+  final bool collapsible;
 
   const MiuixTopBar({
     super.key,
     required this.title,
     this.backgroundColor,
     this.actions = const [],
+    this.collapsible = false,
   });
 
   @override
   Size get preferredSize => const Size.fromHeight(height);
 
   @override
+  State<MiuixTopBar> createState() => _MiuixTopBarState();
+}
+
+class _MiuixTopBarState extends State<MiuixTopBar> {
+  ScrollNotificationObserverState? _observer;
+  double _collapse = 0;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _observer?.removeListener(_onScroll);
+    _observer = ScrollNotificationObserver.maybeOf(context);
+    _observer?.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _observer?.removeListener(_onScroll);
+    super.dispose();
+  }
+
+  void _onScroll(ScrollNotification notification) {
+    if (notification.depth != 0) return;
+    final metrics = notification.metrics;
+    if (metrics.axis != Axis.vertical) return;
+    final next = MiuixLargeTitle.collapseFor(
+      metrics.pixels - metrics.minScrollExtent,
+    );
+    if ((next - _collapse).abs() < 0.001) return;
+    setState(() => _collapse = next);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final canPop = Navigator.of(context).canPop();
+    final titleOpacity = widget.collapsible ? _collapse : 1.0;
     return Material(
-      color: backgroundColor ?? cs.surface,
+      color: widget.backgroundColor ?? cs.surface,
       child: SafeArea(
         bottom: false,
         child: SizedBox(
-          height: height,
+          height: MiuixTopBar.height,
           child: Stack(
             alignment: Alignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 64),
-                child: Text(
-                  title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: cs.onSurface,
-                    fontSize: MiuixTypography.title,
-                    fontWeight: FontWeight.w500,
+                child: Opacity(
+                  opacity: titleOpacity,
+                  child: Transform.translate(
+                    offset: Offset(0, 6 * (1 - titleOpacity)),
+                    child: Text(
+                      widget.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: cs.onSurface,
+                        fontSize: MiuixTypography.title,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -98,13 +140,49 @@ class MiuixTopBar extends StatelessWidget implements PreferredSizeWidget {
                     onPressed: () => Navigator.of(context).maybePop(),
                   ),
                 ),
-              if (actions.isNotEmpty)
+              if (widget.actions.isNotEmpty)
                 Positioned(
                   right: 8,
-                  child: Row(mainAxisSize: MainAxisSize.min, children: actions),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: widget.actions,
+                  ),
                 ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class MiuixLargeTitle extends StatelessWidget {
+  static const double defaultInset = 10;
+  static const double _fadeStart = 12;
+  static const double _fadeLength = 36;
+
+  final String title;
+  final double inset;
+
+  const MiuixLargeTitle(this.title, {super.key, this.inset = defaultInset});
+
+  static double collapseFor(double offset) =>
+      ((offset - _fadeStart) / _fadeLength).clamp(0.0, 1.0);
+
+  @override
+  Widget build(BuildContext context) {
+    if (!AppMiuix.active) return const SizedBox.shrink();
+    return Padding(
+      padding: EdgeInsets.fromLTRB(inset, 0, inset, 12),
+      child: Text(
+        title,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.onSurface,
+          fontSize: MiuixTypography.largeTitle,
+          fontWeight: FontWeight.w400,
+          height: 1.2,
         ),
       ),
     );

@@ -145,6 +145,7 @@ class ConnectionTitleBar extends StatelessWidget
         ? MiuixTopBar(
             title: label ?? titleText,
             backgroundColor: backgroundColor,
+            collapsible: label == null,
           )
         : AppBarM3E(
             titleText: label ?? titleText,

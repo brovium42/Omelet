@@ -24,6 +24,7 @@ import '../../widgets/liquid_glass.dart';
 import '../../widgets/settings_card.dart';
 import '../../../core/config/app_shape.dart';
 import 'miuix_settings_screen.dart';
+import '../../widgets/miuix/miuix_components.dart';
 
 class AppearanceScreen extends StatefulWidget {
   const AppearanceScreen({super.key});
@@ -108,6 +109,7 @@ class _AppearanceScreenState extends State<AppearanceScreen> {
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
           children: [
+            MiuixLargeTitle(l10n.appearanceTitle),
             _PreviewSection(color: _color, isSystem: _isSystem),
             const SizedBox(height: 16),
             _ColorPickerCard(
