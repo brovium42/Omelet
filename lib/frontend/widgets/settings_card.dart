@@ -220,8 +220,8 @@ class SettingsNavTile extends StatelessWidget {
               Icon(
                 Symbols.chevron_right,
                 color: cs.outline,
-                size: 20,
-                weight: 400,
+                size: AppMiuix.active ? 24 : 20,
+                weight: AppMiuix.active ? 500 : 400,
               ),
             ],
           ),

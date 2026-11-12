@@ -2559,15 +2559,18 @@ class _ChatListScreenState extends State<ChatListScreen>
                                       final frost =
                                           style.glossyChrome &&
                                           NavPillMaterial.isFrost(navStyle);
+                                      final miuix = style == VisualStyle.miuix;
                                       return GlossyPill(
                                         onTap: _toggleFab,
-                                        color: frost || liquid
+                                        color: miuix
+                                            ? cs.primary
+                                            : frost || liquid
                                             ? AppFrost.glassTint(cs)
                                             : cs.primaryContainer,
-                                        blurSigma: frost
+                                        blurSigma: frost && !miuix
                                             ? AppFrost.sigma
                                             : null,
-                                        liquid: liquid,
+                                        liquid: liquid && !miuix,
                                         backdropKey: _frostBackdrop,
                                         borderRadius: BorderRadius.circular(28),
                                         elevated: true,
@@ -2585,7 +2588,9 @@ class _ChatListScreenState extends State<ChatListScreen>
                                     angle: val * (pi / 4),
                                     child: Icon(
                                       Symbols.add,
-                                      color: cs.onPrimaryContainer,
+                                      color: AppMiuix.active
+                                          ? cs.onPrimary
+                                          : cs.onPrimaryContainer,
                                       size: 28,
                                       weight: 400,
                                     ),

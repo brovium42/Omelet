@@ -13,6 +13,7 @@ class MiuixNavigationBar extends StatelessWidget {
   static const double insetGap = 8;
   static const double iconSize = 24;
   static const double labelSize = 11;
+  static const double thinGlassBlurScale = 0.35;
   static const BorderRadius _capsule = BorderRadius.all(
     Radius.circular(barHeight / 2),
   );
@@ -120,6 +121,7 @@ class MiuixNavigationBar extends StatelessWidget {
         borderRadius: _capsule,
         tint: container,
         shadow: false,
+        blurScale: thinGlassBlurScale,
         child: content,
       );
     } else if (blur) {

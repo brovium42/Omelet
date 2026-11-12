@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:omelet/backend/modules/contacts.dart';
 import 'package:omelet/core/config/app_frost.dart';
+import 'package:omelet/core/utils/logger.dart';
 import 'package:omelet/core/config/app_miuix.dart';
 import 'package:omelet/core/config/app_nav_pill_style.dart';
 import 'package:omelet/core/config/app_visual_style.dart';
@@ -151,7 +152,14 @@ class _AttachmentSheetState extends State<AttachmentSheet> {
   Future<void> _loadGallery({bool silent = false}) async {
     final token = ++_loadToken;
     if (!silent) setState(() => _loading = true);
-    final permission = await _source.ensurePermission();
+    final GalleryPermission permission;
+    try {
+      permission = await _source.ensurePermission();
+    } catch (e) {
+      logger.w('gallery permission: $e');
+      _failGalleryLoad(token);
+      return;
+    }
     if (!mounted || token != _loadToken) return;
     if (permission == GalleryPermission.denied) {
       _cachedItems = null;
@@ -165,14 +173,28 @@ class _AttachmentSheetState extends State<AttachmentSheet> {
       return;
     }
     final loaded = _items.length;
-    final page = await _source.load(
-      offset: 0,
-      limit: loaded > GallerySource.pageSize ? loaded : GallerySource.pageSize,
-    );
+    final GalleryPage page;
+    try {
+      page = await _source.load(
+        offset: 0,
+        limit: loaded > GallerySource.pageSize
+            ? loaded
+            : GallerySource.pageSize,
+      );
+    } catch (e) {
+      logger.w('gallery load: $e');
+      _failGalleryLoad(token);
+      return;
+    }
     if (!mounted || token != _loadToken) return;
     _permission = permission;
     _loading = false;
     _publishItems(page.items, page.hasMore);
+  }
+
+  void _failGalleryLoad(int token) {
+    if (!mounted || token != _loadToken) return;
+    setState(() => _loading = false);
   }
 
   Future<void> _loadMore() async {

@@ -85,6 +85,8 @@ class _PhotoManagerSource implements GallerySource {
   AssetPathEntity? _album;
   int _total = 0;
 
+  static const Duration _maxVideoDuration = Duration(milliseconds: 0x7fffffff);
+
   static FilterOptionGroup _filter() => FilterOptionGroup(
     imageOption: const FilterOption(
       sizeConstraint: SizeConstraint(ignoreSize: true),
@@ -92,7 +94,7 @@ class _PhotoManagerSource implements GallerySource {
     videoOption: const FilterOption(
       sizeConstraint: SizeConstraint(ignoreSize: true),
       durationConstraint: DurationConstraint(
-        max: Duration(days: 365),
+        max: _maxVideoDuration,
         allowNullable: true,
       ),
     ),
